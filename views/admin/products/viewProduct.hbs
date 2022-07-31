@@ -1,0 +1,271 @@
+<header class="section-header">
+<nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
+<div class="container">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTop4">
+    <ul class="navbar-nav mr-auto">
+    	<li class="nav-item dropdown">
+		 	<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">   Language </a>
+		    <ul class="dropdown-menu small">
+				<li><a class="dropdown-item" href="#">English</a></li>
+				<li><a class="dropdown-item" href="#">Arabic</a></li>
+				<li><a class="dropdown-item" href="#">Russian </a></li>
+		    </ul>
+		</li>
+		<li class="nav-item dropdown">
+			<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> USD </a>
+			<ul class="dropdown-menu small">
+				<li><a class="dropdown-item" href="#">EUR</a></li>
+				<li><a class="dropdown-item" href="#">AED</a></li>
+				<li><a class="dropdown-item" href="#">RUBL </a></li>
+		    </ul>
+		</li>
+    </ul>
+    <ul class="navbar-nav">
+		<li><a href="#" class="nav-link"> <i class="fa fa-envelope"></i> Email </a></li>
+		<li><a href="#" class="nav-link"> <i class="fa fa-phone"></i> Call us </a></li>
+	</ul> <!-- list-inline //  -->
+  </div> <!-- navbar-collapse .// -->
+</div> <!-- container //  -->
+</nav>
+
+<section class="header-main border-bottom">
+	<div class="container">
+<div class="row align-items-center">
+	<div class="col-lg-2 col-md-3 col-6">
+		<a href="./" class="brand-wrap">
+			<img class="logo" src="./images/logo.png">
+		</a> <!-- brand-wrap.// -->
+	</div>
+	<div class="col-lg col-sm col-md col-6 flex-grow-0">
+		<div class="category-wrap dropdown d-inline-block float-right">
+			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
+				<i class="fa fa-bars"></i> All category 
+			</button>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="#">Machinery / Mechanical Parts / Tools </a>
+				<a class="dropdown-item" href="#">Consumer Electronics / Home Appliances </a>
+				<a class="dropdown-item" href="#">Auto / Transportation</a>
+				<a class="dropdown-item" href="#">Apparel / Textiles / Timepieces </a>
+				<a class="dropdown-item" href="#">Home & Garden / Construction / Lights </a>
+				<a class="dropdown-item" href="#">Beauty & Personal Care / Health </a> 
+			</div>
+		</div>  <!-- category-wrap.// -->
+	</div> <!-- col.// -->
+	<a href="./store.html" class="btn btn-outline-primary">Store</a>
+	<div class="col-lg  col-md-6 col-sm-12 col">
+		<form action="#" class="search">
+			<div class="input-group w-100">
+			    <input type="text" class="form-control" style="width:60%;" placeholder="Search">
+			    
+			    <div class="input-group-append">
+			      <button class="btn btn-primary" type="submit">
+			        <i class="fa fa-search"></i>
+			      </button>
+			    </div>
+		    </div>
+		</form> <!-- search-wrap .end// -->
+	</div> <!-- col.// -->
+	<div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
+				<div class="d-flex justify-content-end mb-3 mb-lg-0">
+					<div class="widget-header">
+						<small class="title text-muted">Welcome guest!</small>
+						<div> 
+							<a href="./signin.html">Sign in</a> <span class="dark-transp"> | </span>
+							<a href="./register.html"> Register</a>
+						</div>
+					</div>
+					<a href="./cart.html" class="widget-header pl-3 ml-3">
+						<div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
+						<span class="badge badge-pill badge-danger notify">0</span>
+					</a>
+				</div> <!-- widgets-wrap.// -->
+			</div> <!-- col.// -->
+</div> <!-- row.// -->
+	</div> <!-- container.// -->
+</section> <!-- header-main .// -->
+
+
+
+</header> <!-- section-header.// -->
+
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-conten padding-y bg">
+
+<div class="container">
+	<div class="row">
+	<aside class="col-md-3">
+		<!--   SIDEBAR   -->
+		<ul class="list-group">
+			<a class="list-group-item " href="/admin">Dashboard</a>
+			<a class="list-group-item active" href="#">View Products</a>
+            <a class="list-group-item " href="/admin/addproducts">Add Product</a>
+		</ul>
+		<br>
+		<!--   SIDEBAR .//END   -->
+			<div class="tm-bg-primary-dark tm-block tm-block-product-categories">
+            <h4 class="tm-block-title">Product Categories</h4>
+            <div class="tm-product-table-container">
+              <table class="table tm-table-small tm-product-table">
+                <tbody>
+					 {{#each category}}
+                  <tr>
+                    <td class="tm-product-name">{{this.name}}</td>
+                    <td class="text-center">
+                      <button class="tm-product-delete-link"id="catdelete" onclick="hello('{{this._id}}')">
+                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                      </button>
+                    </td>
+                  </tr>
+					 {{/each}}
+                </tbody>
+              </table>
+            </div>
+            <!-- table container -->
+            <a  href="categorys" class="btn btn-primary btn-block text-uppercase mb-3">
+              Add new category
+            </a>
+          </div>
+		  <br>
+		  {{!--  --}}
+		   <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
+            <h4 class="tm-block-title">Product SubCategories</h4>
+            <div class="tm-product-table-container">
+              <table class="table tm-table-small tm-product-table">
+                <tbody>
+					 {{#each subCategory}}
+                  <tr>
+                    <td class="tm-product-name">{{this.name}}</td>
+                    <td class="text-center">
+                      <button class="tm-product-delete-link" id="subdelete" onclick="subdelete('{{this._id}}')" >
+                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                      </button>
+                    </td>
+                  </tr>
+					 {{/each}}
+                </tbody>
+              </table>
+            </div>
+            <!-- table container -->
+            <a href="subcategorys" class="btn btn-primary btn-block text-uppercase mb-3">
+              Add new Subcategory
+            </a>
+          </div>
+	</aside>
+	<main class="col-md-9">
+		<article class="card">
+		<header class="card-header">
+			<strong class="d-inline-block mr-3">All Products</strong>
+		</header>
+		<div class="card-body">
+			<div class="row"> 
+				<div class="table-responsive">
+		<table class="table table-hover">
+			{{#each products}}
+			<tr>
+				<td width="65">
+					<img src="/images/items/{{this.image}}" class="img-xs border">
+				</td>
+				<td> 
+					<p class="title mb-0">{{this.productName}}</p>
+					<var class="price text-muted">RS {{this.price}}</var>
+				</td>
+				<td> Seller <br>{{this.brandName}}</td>
+				<td width="250"> <a href="/admin/products/{{this._id}}" class="btn btn-outline-primary">Update</a> <a href="/admin/products/{{this._id}}" class="btn btn-light"> Details </a> </td>
+			</tr>
+			{{/each}}
+		</table>
+		</div>
+		
+			</div> <!-- row.// -->
+		</div> <!-- card-body .// -->
+		 <!-- table-responsive .end// -->
+		</article> <!-- order-group.// --> 
+		
+	</main>
+<div class="row">
+	<div class="col-12">
+
+		 
+	</div>
+</div>
+</div> <!-- row.// -->
+
+</div>
+
+
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+<!-- ========================= FOOTER ========================= -->
+<footer class="section-footer border-top padding-y">
+	<div class="container">
+		<p class="float-md-right"> 
+			&copy Copyright 2019 All rights reserved
+		</p>
+		<p>
+			<a href="#">Terms and conditions</a>
+		</p>
+	</div><!-- //container -->
+</footer>
+<!-- ========================= FOOTER END // ========================= -->
+
+<script>
+	const hello=(value)=>{
+		console.log('clicked')
+	const deletecat=async (value)=>{
+		try{
+		console.log(value)
+		const res=await axios.delete(`/admin/categorys/${value}`, {
+  							headers: {
+ 								 },
+ 							 data: {
+
+ 								   value
+							 }
+ 									 
+							}).then(e=>{
+
+							window.location.reload(true);
+							})
+	}catch(err){
+			console.log(err)
+
+		}
+	}
+	deletecat(value);
+	}
+
+
+
+	const subdelete=value=>{
+		console.log('clicked')
+	const deletesubcat=async ()=>{
+		try{
+		console.log(value)
+		const res=await axios.delete(`/admin/subcategorys/${value}`, {
+  							headers: {
+ 								 },
+ 							 data: {
+
+ 								   value
+							 }
+ 									 
+							}).then(e=>{
+
+							window.location.reload(true);
+							})
+
+	}catch(err){
+			console.log(err)
+
+		}
+	}
+	deletesubcat(value);
+	}
+</script>

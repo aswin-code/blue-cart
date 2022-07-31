@@ -1,0 +1,121 @@
+<div class="container">
+  <div class="card">
+    <div class="container-fliud">
+      <div class="wrapper row">
+        <div class="preview col-md-6">
+          <div class="preview-pic tab-content">
+            <div class="tab-pane active" id="pic-1"><img src="/images/items/{{product.image}}" /></div>
+          </div>
+        </div>
+        <div class="details col-md-6">
+          <h3 class="product-title">{{product.productName}}</h3>
+          <div class="rating">
+            <div class="stars">
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star"></span>
+              <span class="fa fa-star"></span>
+            </div>
+            <span class="review-no">41 reviews</span>
+          </div>
+          <p class="product-description">{{product.description}}</p>
+          <h4 class="price">current price: <span>Rs.{{product.price}}</span></h4>
+          <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+          <h5 class="sizes">
+            sizes:
+            <span class="size" data-toggle="tooltip" title="small">{{product.size}}</span>
+          </h5>
+          <h5 class="colors">
+            colors:
+            <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
+            <span class="color green"></span>
+            <span class="color blue"></span>
+          </h5>
+          <div class="action">
+            <button class="add-to-cart btn btn-danger" type="button">Delete</button>
+            <button class="add-to-cart btn btn-danger" type="button" onclick="display()">Edit</button>
+          </div>
+          <div class="col-12" id="editblock" style="display:none;">
+            <h2 class="tm-block-title d-inline-block">Add Product</h2>
+            <div class="row tm-edit-product-row">
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <form action="/admin/addproducts" method="post" class="tm-edit-product-form">
+                  <div class="form-group mb-3">
+                    <label for="name">Product Name </label>
+                    <input id="name" name="productName" type="text" class="form-control validate" required="" value="{{product.productName}}" />
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="name">Brand Name </label>
+                    <input id="name" name="brandName" type="text" class="form-control validate" required="" value="{{product.brandName}}" />
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="name">Price </label>
+                    <input id="name" name="price" type="number" class="form-control validate" required="" value="{{product.price}}" />
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="name">Discount Price </label>
+                    <input id="name" name=" discountPrice" type="number" class="form-control validate" required="" value="{{product.discountPrice}}" />
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="description">Description</label>
+                    <textarea class="form-control validate" name="description" rows="3" required="" value="">{{product.description}}</textarea>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="category">Category</label>
+                    <select class="custom-select tm-select-accounts" id="category" name="" onblur="selectSub()">
+                      {{#each subcategory.categoryName}}
+                        <option selected="">{{this.name}}</option>
+                      {{/each}}
+                      {{#each category}}
+                        <option value="{{this._id}}">{{this.name}}</option>
+
+                      {{/each}}
+                      {{#each category}}
+                        <option value="{{this._id}}">{{this.name}}</option>
+                      {{/each}}
+                    </select>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="category"></label>
+                    <select class="custom-select tm-select-accounts" id="subcategory" name="subCategory">
+                      <option selected="">{{subcategory.name}}</option>
+                    </select>
+                  </div>
+                  <div class="row">
+                    <div class="form-group mb-3 col-xs-12 col-sm-6">
+                      <label for="expire_date">Size </label>
+                      <input id="expire_date" name="size" type="text" class="form-control validate hasDatepicker" data-large-mode="true" value="{{product.size}}" />
+                    </div>
+                    <div class="form-group mb-3 col-xs-12 col-sm-6">
+                      <label for="stock">Units In Stock </label>
+                      <input id="stock" name="stock" type="text" class="form-control validate" required="" value="{{product.stock}}" />
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+                <div class="tm-product-img-dummy mx-auto">
+                  <i class="fas fa-cloud-upload-alt tm-upload-icon" onclick="document.getElementById('fileInput').click();"></i>
+                </div>
+                <div class="custom-file mt-3 mb-3">
+                  <input id="fileInput" name="image" type="file" style="display: none;" />
+                  <input type="file" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE" />
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-block text-uppercase">Add Product Now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const display = () => { document.getElementById("editblock").style.display = "block"; }; const selectSub=(value)=> { var e = document.getElementById("category"); var value = e.value;
+  console.log('worked') ; axios.get(`/admin/categorys/${value}`,{ Headers:{ } }).then(e=>{ const data=e.data.subCategory; let element; for (const e of data) { element+=`<option
+  value="${e._id}">${e.name}</option>` } document.getElementById('subcategory').innerHTML=element }); };
+</script>
