@@ -75,12 +75,13 @@ exports.postSignin = async (req, res) => {
             email,
             password
         } = req.body;
-
+        console.log(password);
         const user = await User.findOne({
             email
         });
         if (user) {
             bcrypt.compare(password, user.password).then(data => {
+                console.log(data);
                 if (data) {
                     const token = jwt.sign({
                         id: user._id,

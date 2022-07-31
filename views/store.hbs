@@ -106,7 +106,7 @@
                 <a href="/logout">Logout</a>
               </div>
             </div>
-            <a href="./cart.html" class="widget-header pl-3 ml-3">
+            <a href="/users/{{user._id}}/carts" class="widget-header pl-3 ml-3">
               <div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
               <span class="badge badge-pill badge-danger notify" id="cartNo">{{user.cart.length}}</span>
             </a>
@@ -154,9 +154,7 @@
 
                 <ul class="list-menu">
                   {{#each category}}
-                  <li><a href="#" data-toggle="collapse" data-target="#collapse_2" aria-expanded="true"
-                      class="">{{this.name}} </a>
-                  <li class="filter-content collapse show" id="collapse_2" style="">{{this.sub}}</li>
+                  <li><a href="/users/{{../user._id}}/categorys/{{this._id}}" class="">{{this.name}} </a>
                   </li>
                   {{/each}}
                 </ul>
@@ -252,11 +250,10 @@
 
         <header class="border-bottom mb-4 pb-3">
           <div class="form-inline">
-            <span class="mr-md-auto">32 Items found </span>
+            <span class="mr-md-auto">{{products.length}} Items found </span>
 
           </div>
         </header><!-- sect-heading -->
-
         <div class="row">
           {{#each products}}
           <div class="col-md-4">
@@ -269,14 +266,15 @@
               <!-- img-wrap.// -->
               <figcaption class="info-wrap">
                 <div class="fix-height">
-                  <a href="./product-detail.html" class="title">{{this.productName}}</a>
+                  <a href="/users/{{../user._id}}/products/{{this._id}}" class="title">{{this.productName}}</a>
                   <div class="price-wrap mt-2">
                     <span class="price">Rs {{this.discountPrice}}</span>
                     <del class="price-old">RS{{this.price}}</del>
                   </div>
                   <!-- price-wrap.// -->
                 </div>
-                <a class="btn btn-block btn-primary" onclick="addCart('{{this._id}}')">Add to cart </a>
+                <a class="btn btn-block btn-primary" onclick="addCart('{{../user._id}}','{{this._id}}')">Add to cart
+                </a>
               </figcaption>
             </figure>
           </div>
@@ -317,10 +315,9 @@
   </div><!-- //container -->
 </footer>
 <script>
-  const addCart = async (value) => {
+  const addCart = async (userid, value) => {
     try {
-      const url = window.location.href + '/carts/';
-      const res = await axios.post(`${url}`, {
+      const res = await axios.post(`/users/${userid}/carts`, {
         value
       }).then((e) => {
         alert("item added to cart");
