@@ -73,7 +73,6 @@ exports.getAddProduct = async (req, res) => {
 };
 
 exports.addProduct = async (req, res) => {
-  console.log(req.file.filename);
   const brandName = req.body.brandName;
   const productName = req.body.productName;
   const price = req.body.price;
@@ -106,6 +105,7 @@ exports.getAProduct = async (req, res) => {
     const subCategory = await SubCategory.find().lean();
     const product = await Product.findById(req.params.id);
     const subcategory = await SubCategory.findById(product.subCategory).populate("categoryName").lean();
+    console.log(subcategory);
     res.render("admin/products/productDetails", {
       product,
       subcategory,
@@ -116,6 +116,32 @@ exports.getAProduct = async (req, res) => {
     console.log(error);
   }
 };
+
+exports.editProduct=async(req,res)=>{
+  try {
+     const category = await Category.find().lean();
+    const subcategory = await SubCategory.findOne({name:req.body.SubCategory})
+    console.log(subcategory);
+    const product=await ProductModel.findByIdAndUpdate(req.params.id,req.body,{new:true});
+    console.log(product);
+    res.render('admin/products/productDetails',{ product,
+      category,
+      subcategory,})
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+exports.deleteProduct=async(req,res)=>{
+  try {
+    await Product.findByIdAndDelete(req.params.id);
+    res.json({message:"product deleted",url:'/admin/products'})
+    
+  } catch (error) {
+    console.log(error)
+    
+  }
+}
 
 //  ///////////////////////////////////////////
 
@@ -130,48 +156,42 @@ exports.getAllUsers = async (req, res) => {
   });
 };
 
-exports.getCreateUser = (req, res) => {
-  res.render("admin/users/addUser");
-};
+// exports.getCreateUser = (req, res) => {
+//   res.render("admin/users/addUser");
+// };
 
-exports.createUser = async (req, res) => {
+// exports.createUser = async (req, res) => {
+//   try {
+//     console.log(req.body);
+//     const newUser = await new User(req.body);
+//     const result = newUser.save().then((e) => {
+//       res.json({
+//         status: "success",
+//         data: {
+//           url:"/admin/users"
+//         },
+//       });
+//     });
+//     console.log(result);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+exports.BlockUnbolck= async(req,res)=>{
   try {
-    const newUser = await new User(req.body);
-    const result = newUser.save().then((e) => {
-      res.json({
-        status: "success",
-        data: {
-          newUser,
-        },
-      });
-    });
-    console.log(result);
+    if(req.body.value === "block"){
+      await User.findByIdAndUpdate(req.params.id,{$set:{isActive:false}})
+      res.json({message:"User have been blocked"})
+    }else{
+      await User.findByIdAndUpdate(req.params.id,{$set:{isActive:true}})
+      res.json({message:"User have been unblocked"})
+    }
   } catch (error) {
     console.log(error);
   }
-};
+}
 
-exports.getUpdateUser = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id).lean();
-    res.render("admin/users/updateUser", {
-      user,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
 
-exports.deleteUser = async (req, res) => {
-  try {
-    await User.findByIdAndDelete(req.params.id).then((e) => {
-      res.json({
-        status: "success",
-      });
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 ///////////////////////////////////////////////

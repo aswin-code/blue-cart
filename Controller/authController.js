@@ -79,45 +79,53 @@ exports.postSignin = async (req, res) => {
         const user = await User.findOne({
             email
         });
-        if (user) {
-            bcrypt.compare(password, user.password).then(data => {
-                console.log(data);
-                if (data) {
-                    const token = jwt.sign({
-                        id: user._id,
-                        isAdmin: user.isAdmin
-                    }, process.env.JWT_SECRTKEY);
-                    if (user.isAdmin) {
-                        res.cookie('jwt', token, {
-                            httpOnly: true
-                        }).redirect(`/admin`);
-                    } else {
-                        res.cookie('jwt', token, {
-                            httpOnly: true
-                        }).redirect(`/users/${user._id}`);
-                    }
-                } else {
-                    res.json({
-                        status: "failed",
-                        data: {
-                            message: "invaild email or password"
-                        }
-                    });
-
-                }
-            })
-        } else {
+        if(!user.isActive){
             res.json({
-                status: "failed",
-                data: {
-                    message: "invaild email or password"
-                }
-            });
+                status:"blocked",
+                message:"sorry your account has been disabled"
+            })
+        }else{
 
+            if (user) {
+                bcrypt.compare(password, user.password).then(data => {
+                    console.log(data);
+                    if (data) {
+                        const token = jwt.sign({
+                            id: user._id,
+                            isAdmin: user.isAdmin
+                        }, process.env.JWT_SECRTKEY);
+                        if (user.isAdmin) {
+                            res.cookie('jwt', token, {
+                                httpOnly: true
+                            }).redirect(`/admin`);
+                        } else {
+                            res.cookie('jwt', token, {
+                                httpOnly: true
+                            }).redirect(`/users/${user._id}`);
+                        }
+                    } else {
+                        res.json({
+                            status: "failed",
+                            data: {
+                                message: "invaild email or password"
+                            }
+                        });
+                        
+                    }
+                })
+            } else {
+                res.json({
+                    status: "failed",
+                    data: {
+                        message: "invaild email or password"
+                    }
+                });
+                
+            }
+            
         }
-
-
-
+            
+            
     } catch (err) {
         console.log(err);
 

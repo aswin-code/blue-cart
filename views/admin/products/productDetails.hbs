@@ -33,79 +33,86 @@
             <span class="color blue"></span>
           </h5>
           <div class="action">
-            <button class="add-to-cart btn btn-danger" type="button">Delete</button>
+            <button class="add-to-cart btn btn-danger" type="button"
+              onclick="deleteProduct('{{product._id}}')">Delete</button>
             <button class="add-to-cart btn btn-danger" type="button" onclick="display()">Edit</button>
           </div>
           <div class="col-12" id="editblock" style="display:none;">
             <h2 class="tm-block-title d-inline-block">Add Product</h2>
             <div class="row tm-edit-product-row">
-              <div class="col-xl-6 col-lg-6 col-md-12">
-                <form action="/admin/addproducts" method="post" class="tm-edit-product-form">
+              <form id="form" class="tm-edit-product-form" action="/admin/products/{{product._id}}" method="post"
+                enctype="multipart/form-data">
+                <div class="col-xl-6 col-lg-6 col-md-12">
                   <div class="form-group mb-3">
                     <label for="name">Product Name </label>
-                    <input id="name" name="productName" type="text" class="form-control validate" required="" value="{{product.productName}}" />
+                    <input id="productName" name="productName" type="text" class="form-control validate" required=""
+                      value="{{product.productName}}" />
                   </div>
                   <div class="form-group mb-3">
                     <label for="name">Brand Name </label>
-                    <input id="name" name="brandName" type="text" class="form-control validate" required="" value="{{product.brandName}}" />
+                    <input id="brandName" name="brandName" type="text" class="form-control validate" required=""
+                      value="{{product.brandName}}" />
                   </div>
                   <div class="form-group mb-3">
                     <label for="name">Price </label>
-                    <input id="name" name="price" type="number" class="form-control validate" required="" value="{{product.price}}" />
+                    <input id="price" name="price" type="number" class="form-control validate" required=""
+                      value="{{product.price}}" />
                   </div>
                   <div class="form-group mb-3">
                     <label for="name">Discount Price </label>
-                    <input id="name" name=" discountPrice" type="number" class="form-control validate" required="" value="{{product.discountPrice}}" />
+                    <input id="discountPrice" name=" discountPrice" type="number" class="form-control validate"
+                      required="" value="{{product.discountPrice}}" />
                   </div>
                   <div class="form-group mb-3">
                     <label for="description">Description</label>
-                    <textarea class="form-control validate" name="description" rows="3" required="" value="">{{product.description}}</textarea>
+                    <textarea class="form-control validate" id="description" name="description" rows="3" required=""
+                      value="">{{product.description}}</textarea>
                   </div>
                   <div class="form-group mb-3">
                     <label for="category">Category</label>
                     <select class="custom-select tm-select-accounts" id="category" name="" onblur="selectSub()">
-                      {{#each subcategory.categoryName}}
-                        <option selected="">{{this.name}}</option>
-                      {{/each}}
+                      <option selected="">{{subcategory}}</option>
                       {{#each category}}
-                        <option value="{{this._id}}">{{this.name}}</option>
-
-                      {{/each}}
-                      {{#each category}}
-                        <option value="{{this._id}}">{{this.name}}</option>
+                      <option value="{{this._id}}">{{this.name}}</option>
                       {{/each}}
                     </select>
                   </div>
                   <div class="form-group mb-3">
-                    <label for="category"></label>
+                    <label for="category">sub</label>
                     <select class="custom-select tm-select-accounts" id="subcategory" name="subCategory">
-                      <option selected="">{{subcategory.name}}</option>
+                      <option selected="">Select category</option>
+
+
                     </select>
                   </div>
                   <div class="row">
                     <div class="form-group mb-3 col-xs-12 col-sm-6">
                       <label for="expire_date">Size </label>
-                      <input id="expire_date" name="size" type="text" class="form-control validate hasDatepicker" data-large-mode="true" value="{{product.size}}" />
+                      <input id="size" name="size" type="text" class="form-control validate hasDatepicker"
+                        data-large-mode="true" value="{{product.size}}" />
                     </div>
                     <div class="form-group mb-3 col-xs-12 col-sm-6">
                       <label for="stock">Units In Stock </label>
-                      <input id="stock" name="stock" type="text" class="form-control validate" required="" value="{{product.stock}}" />
+                      <input id="stock" name="stock" type="text" class="form-control validate" required=""
+                        value="{{product.stock}}" />
                     </div>
                   </div>
-                </form>
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
-                <div class="tm-product-img-dummy mx-auto">
-                  <i class="fas fa-cloud-upload-alt tm-upload-icon" onclick="document.getElementById('fileInput').click();"></i>
                 </div>
-                <div class="custom-file mt-3 mb-3">
-                  <input id="fileInput" name="image" type="file" style="display: none;" />
-                  <input type="file" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE" />
+                <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+                  <div class="tm-product-img-dummy mx-auto">
+                    <i class="fas fa-cloud-upload-alt tm-upload-icon"
+                      onclick="document.getElementById('fileInput').click();"></i>
+                  </div>
+                  <div class="custom-file mt-3 mb-3">
+                    <input id="fileInput" name="image" type="file" style="display: none;" />
+                    <input type="file" id="image" class="btn btn-primary btn-block mx-auto"
+                      value="UPLOAD PRODUCT IMAGE" />
+                  </div>
                 </div>
-              </div>
-              <div class="col-12">
-                <button type="submit" class="btn btn-primary btn-block text-uppercase">Add Product Now</button>
-              </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary btn-block text-uppercase">update</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -113,9 +120,103 @@
     </div>
   </div>
 </div>
-
 <script>
-  const display = () => { document.getElementById("editblock").style.display = "block"; }; const selectSub=(value)=> { var e = document.getElementById("category"); var value = e.value;
-  console.log('worked') ; axios.get(`/admin/categorys/${value}`,{ Headers:{ } }).then(e=>{ const data=e.data.subCategory; let element; for (const e of data) { element+=`<option
-  value="${e._id}">${e.name}</option>` } document.getElementById('subcategory').innerHTML=element }); };
+  const display = () => {
+    document.getElementById("editblock").style.display = "block";
+  };
+  const selectSub = (value) => {
+    var e = document.getElementById("category");
+    var value = e.value;
+    console.log('worked');
+    axios.get(`/admin/categorys/${value}`, {
+      Headers: {
+
+      }
+    }).then(e => {
+      const data = e.data.subCategory;
+      let element;
+      for (const e of data) {
+        element += `<option value="${e._id}">${e.name}</option>`
+      }
+      document.getElementById('subcategory').innerHTML = element
+    });
+  };
+  const deleteProduct = async (value) => {
+    const res = await axios.delete(`/admin/products/${value}`, { data: "delete a item" }).then(e => {
+      alert(e.data.message);
+      window.location.assign(e.data.url)
+    })
+  }
+
+
+
+  const register = async (brandName,
+    productName,
+    price,
+    stock,
+    size,
+    discountPrice,
+    image,
+    subCategory) => {
+    try {
+      const res = await axios.post('', {
+        Headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        brandName,
+        productName,
+        price,
+        stock,
+        size,
+        discountPrice,
+        image,
+        subCategory
+      }
+      )
+      console.log(res);
+    } catch (err) {
+      console.log(err)
+    }
+
+  }
+
+
+
+  /*document.getElementById('form').addEventListener('submit', e => {
+    e.preventDefault();
+    const brandName = document.getElementById('brandName').value
+    const productName = document.getElementById('productName').value
+    const price = document.getElementById('price').value
+    const stock = document.getElementById('stock').value
+    const size = document.getElementById('size').value
+    const discountPrice = document.getElementById('discountPrice').value
+    const image = document.getElementById('image').files
+    const subCategory = checkCountry();
+
+    const description = document.getElementById('description').value
+
+    function radioValue() {
+      var ele = document.getElementsByName('gender');
+
+      for (i = 0; i < ele.length; i++) {
+        if (ele[i].checked)
+          return ele[i].value;
+      }
+    }
+
+    function checkCountry() {
+      const country = document.querySelector('#subcategory')
+      return country.options[country.selectedIndex].value
+    }
+
+    register(brandName,
+      productName,
+      price,
+      stock,
+      size,
+      discountPrice,
+      image,
+
+      subCategory);
+  })*/
 </script>

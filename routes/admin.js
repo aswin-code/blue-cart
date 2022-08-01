@@ -61,19 +61,30 @@ router.route("/subcategorys/:id").delete(adminController.deletesubCategory);
 
 /////////////product management////////////////////
 
-router.route("/products").get(adminController.getproductpage);
+router.route("/products")
+.get(adminController.getproductpage);
 
-router.route("/products/:id").get(adminController.getAProduct);
+router.route("/products/:id")
+.get(adminController.getAProduct)
+.post(uploads,adminController.editProduct)
+.delete(adminController.deleteProduct)
 
-router.route("/addproducts").get(adminController.getAddProduct).post(uploads, adminController.addProduct);
+router.route("/addproducts")
+.get(adminController.getAddProduct)
+.post(uploads, adminController.addProduct);
 
 ////////////////////////////////////////////////////
 
 //////////////user management//////////////////////
-router.route("/users").get(verifytoken, adminController.getAllUsers).post(verifytoken, adminController.createUser);
+router.route("/users")
+.get(verifytoken, adminController.getAllUsers)
+// .post(verifytoken, adminController.createUser);
 
-router.route("/addusers").get(verifytoken, adminController.getCreateUser);
+router.route("/addusers")
+// .get(verifytoken, adminController.getCreateUser);
 
-router.route("/users/:id").get(adminController.getUpdateUser).patch().delete(adminController.deleteUser);
+router.route("/users/:id")
+.post(adminController.BlockUnbolck);
+// .patch(adminController.getUpdateUser)
 
 module.exports = router;
