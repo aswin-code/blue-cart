@@ -3,6 +3,7 @@ const SubCategory = require("../model/products/SubCategory");
 const Product = require("../model/products/ProductModel");
 const User = require("../model/UserModel");
 const ProductModel = require("../model/products/ProductModel");
+const Usersmodel = require("../model/UserModel");
 
 // //////////  category management ///////////////
 
@@ -134,6 +135,7 @@ exports.editProduct=async(req,res)=>{
 
 exports.deleteProduct=async(req,res)=>{
   try {
+    await Usersmodel.updateMany({},{$pull:{cart:req.params.id}})
     await Product.findByIdAndDelete(req.params.id);
     res.json({message:"product deleted",url:'/admin/products'})
     

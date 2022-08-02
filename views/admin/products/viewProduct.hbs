@@ -40,21 +40,6 @@
 						<img class="logo" src="./images/logo.png">
 					</a> <!-- brand-wrap.// -->
 				</div>
-				<div class="col-lg col-sm col-md col-6 flex-grow-0">
-					<div class="category-wrap dropdown d-inline-block float-right">
-						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-							<i class="fa fa-bars"></i> All category
-						</button>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">Machinery / Mechanical Parts / Tools </a>
-							<a class="dropdown-item" href="#">Consumer Electronics / Home Appliances </a>
-							<a class="dropdown-item" href="#">Auto / Transportation</a>
-							<a class="dropdown-item" href="#">Apparel / Textiles / Timepieces </a>
-							<a class="dropdown-item" href="#">Home & Garden / Construction / Lights </a>
-							<a class="dropdown-item" href="#">Beauty & Personal Care / Health </a>
-						</div>
-					</div> <!-- category-wrap.// -->
-				</div> <!-- col.// -->
 				<a href="./store.html" class="btn btn-outline-primary">Store</a>
 				<div class="col-lg  col-md-6 col-sm-12 col">
 					<form action="#" class="search">
@@ -72,15 +57,11 @@
 				<div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
 					<div class="d-flex justify-content-end mb-3 mb-lg-0">
 						<div class="widget-header">
-							<small class="title text-muted">Welcome guest!</small>
+							<small class="title text-muted">Welcome Admin!</small>
 							<div>
 								<a href="/logout">Logout</a>
 							</div>
 						</div>
-						<a href="./cart.html" class="widget-header pl-3 ml-3">
-							<div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
-							<span class="badge badge-pill badge-danger notify">0</span>
-						</a>
 					</div> <!-- widgets-wrap.// -->
 				</div> <!-- col.// -->
 			</div> <!-- row.// -->
@@ -134,24 +115,6 @@
 				<br>
 				{{!-- --}}
 				<div class="tm-bg-primary-dark tm-block tm-block-product-categories">
-					<h4 class="tm-block-title">Product SubCategories</h4>
-					<div class="tm-product-table-container">
-						<table class="table tm-table-small tm-product-table">
-							<tbody>
-								{{#each subCategory}}
-								<tr>
-									<td class="tm-product-name">{{this.name}}</td>
-									<td class="text-center">
-										<button class="tm-product-delete-link" id="subdelete"
-											onclick="subdelete('{{this._id}}')">
-											<i class="far fa-trash-alt tm-product-delete-icon"></i>
-										</button>
-									</td>
-								</tr>
-								{{/each}}
-							</tbody>
-						</table>
-					</div>
 					<!-- table container -->
 					<a href="subcategorys" class="btn btn-primary btn-block text-uppercase mb-3">
 						Add new Subcategory

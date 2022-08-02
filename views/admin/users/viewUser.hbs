@@ -40,21 +40,6 @@
 						<img class="logo" src="./images/logo.png">
 					</a> <!-- brand-wrap.// -->
 				</div>
-				<div class="col-lg col-sm col-md col-6 flex-grow-0">
-					<div class="category-wrap dropdown d-inline-block float-right">
-						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-							<i class="fa fa-bars"></i> All category
-						</button>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">Machinery / Mechanical Parts / Tools </a>
-							<a class="dropdown-item" href="#">Consumer Electronics / Home Appliances </a>
-							<a class="dropdown-item" href="#">Auto / Transportation</a>
-							<a class="dropdown-item" href="#">Apparel / Textiles / Timepieces </a>
-							<a class="dropdown-item" href="#">Home & Garden / Construction / Lights </a>
-							<a class="dropdown-item" href="#">Beauty & Personal Care / Health </a>
-						</div>
-					</div> <!-- category-wrap.// -->
-				</div> <!-- col.// -->
 				<a href="./store.html" class="btn btn-outline-primary">Store</a>
 				<div class="col-lg  col-md-6 col-sm-12 col">
 					<form action="#" class="search">
@@ -72,12 +57,8 @@
 				<div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
 					<div class="d-flex justify-content-end mb-3 mb-lg-0">
 						<div class="widget-header">
-							<small class="title text-muted">Welcome guest!</small>
+							<small class="title text-muted">Welcome Admin!</small>
 						</div>
-						<a href="./cart.html" class="widget-header pl-3 ml-3">
-							<div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
-							<span class="badge badge-pill badge-danger notify">0</span>
-						</a>
 					</div> <!-- widgets-wrap.// -->
 				</div> <!-- col.// -->
 			</div> <!-- row.// -->
@@ -103,7 +84,8 @@
 					{{!-- <a class="list-group-item " href="/admin/addusers">Add User</a> --}}
 				</ul>
 				<br>
-				<a class="btn btn-light btn-block" href="#"> <i class="fa fa-power-off"></i> <span class="text">Log
+				<a class="btn btn-light btn-block" href="/logout"> <i class="fa fa-power-off"></i> <span
+						class="text">Log
 						out</span> </a>
 				<!--   SIDEBAR .//END   -->
 			</aside>
@@ -122,7 +104,8 @@
 											<p class="title mb-0">{{this.fname}} </p>
 											<var class="price text-muted">{{this.email}}</var>
 										</td>
-										<td> Seller <br> Nike clothing </td>
+										<td> {{this.country}} <br> {{this.city}} </td>
+										<td>Items In Cart <br> {{this.cart.length}} </td>
 										{{#if this.isActive}}
 										<td width="250">
 

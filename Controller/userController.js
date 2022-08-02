@@ -30,6 +30,7 @@ exports.getProducts=async(req,res)=>{
 
 exports.getCategory=async(req,res)=>{
   try {
+      const category = await Category.find();
     const user =await Usersmodel.findById(req.params.userid);
     const cateproducts= await Product.find().populate('subCategory')
     const products= await cateproducts.filter(e=>{
@@ -42,7 +43,7 @@ exports.getCategory=async(req,res)=>{
       
     });
     console.log(products);
-    res.render('store',{products,user})
+    res.render('store',{products,user,category})
   } catch (error) {
     
   }
