@@ -1,6 +1,8 @@
 
 const stripe = require('stripe')('sk_test_51LVugISGF4nE7vqYEuRZ6XYr2tBxs2KM4EkgLh7PbjgzLKUDqdZYjyP4tx9yVGoNgM8ocnoNPdAMshsdnsxP2KGq00ElWpdCSm')
-const OrderModel = require('../model/users/OrderModel')
+const OrderModel = require('../model/users/OrderModel');
+const Usersmodel = require("../model/users/UserModel");
+const Cart = require("../model/users/CartModel");
 
 exports.getCheckoutSession = async (req, res, next) => {
     try {
@@ -50,7 +52,10 @@ exports.successfullPaymenet = async (req, res, next) => {
         const { orderid, paid, userid } = req.query;
         if (!orderid && !paid) return next();
 
-        await OrderModel.findByIdAndUpdate(orderid, { $set: { paid: true, status: "Order Placed", paymentType: "Online payment" } })
+        const order = await OrderModel.findByIdAndUpdate(orderid, { $set: { paid: true, status: "Order Placed", paymentType: "Online payment" } })
+        await Usersmodel.findByIdAndUpdate(order.userid, { $set: { cart: [] } })
+        await Cart.findOneAndDelete({ userid: order.userid })
+
         res.redirect(`/users/${userid}`)
     } catch (err) {
         console.log(err)
