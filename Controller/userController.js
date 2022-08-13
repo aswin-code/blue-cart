@@ -273,7 +273,7 @@ exports.cashOnDelivery = async (req, res) => {
 
     newOrder.save()
 
-    await Usersmodel.findByIdAndUpdate(req.params.id, { $pullAll: { cart } })
+    await Usersmodel.findByIdAndUpdate(req.params.id, { $set: { cart: [] } })
     await Cart.findOneAndDelete({ userid: req.params.id })
     res.json({ url: `/users/${user._id}` })
 
