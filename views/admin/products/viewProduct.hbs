@@ -120,6 +120,44 @@
 						Add new Subcategory
 					</a>
 				</div>
+				<div class="tm-bg-primary-dark tm-block tm-block-product-categories py-4">
+					<h4 class="tm-block-title">Coupons</h4>
+					<div class="tm-product-table-container">
+						<table class="table tm-table-small tm-product-table">
+							<tbody>
+								<tr>
+									<th>
+										Coupon code
+									</th>
+									<th>
+										Coupon Discount
+									</th>
+									<th>
+
+									</th>
+								</tr>
+								{{#each coupon}}
+								<tr>
+									<td class="tm-product-name text-center">{{this.name}} </td>
+									<td class="text-center"> {{this.couponDiscount}}</td>
+									<td class="text-right">
+										<button class="tm-product-delete-link" id="deleteCoupon" value="{{this._id}}">
+											<i class="far fa-trash-alt tm-product-delete-icon"></i>
+										</button>
+									</td>
+								</tr>
+								{{/each}}
+							</tbody>
+						</table>
+					</div>
+					<!-- table container -->
+					<div class="text-center">
+						<a href="" class="btn btn-primary btn-block btn-rounded mb-4" data-toggle="modal"
+							data-target="#modalLoginForm">Create New Coupon</a>
+					</div>
+
+				</div>
+				<br>
 			</aside>
 			<main class="col-md-9">
 				<article class="card">
@@ -167,7 +205,40 @@
 
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
+<!--============================modal coupon========================-->
 
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header text-center">
+				<h4 class="modal-title w-100 font-weight-bold">Coupon</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form action="coupon" method="post">
+				<div class="modal-body mx-3">
+					<div class="md-form mb-5">
+						<input type="text" id="defaultForm-email" class="form-control validate" name="name">
+						<label data-error="wrong" data-success="right" for="defaultForm-email">Coupon Code</label>
+					</div>
+
+					<div class="md-form mb-4">
+						<input type="number" id="defaultForm-pass" class="form-control validate" name="couponDiscount">
+						<label data-error="wrong" data-success="right" for="defaultForm-pass">
+							Coupon Discount </label>
+					</div>
+
+				</div>
+				<div class="modal-footer d-flex justify-content-center">
+					<button type="submit" class="btn btn-default btn-primary">Create</button>
+				</div>
+		</div>
+	</div>
+</div>
+
+<!--============================modal coupon END //========================-->
 
 <!-- ========================= FOOTER ========================= -->
 <footer class="section-footer border-top padding-y">
@@ -183,6 +254,16 @@
 <!-- ========================= FOOTER END // ========================= -->
 
 <script>
+
+	$(document).ready(function () {
+		$('#deleteCoupon').click(async function () {
+			const couponid = document.getElementById('deleteCoupon').value
+
+			await axios.patch('coupon', { couponid }).then(e => {
+				window.location.reload()
+			})
+		})
+	})
 	const hello = (value) => {
 		console.log('clicked')
 		const deletecat = async (value) => {

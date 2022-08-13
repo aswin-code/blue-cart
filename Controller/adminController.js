@@ -1,9 +1,11 @@
 const Category = require("../model/products/CategoryModel");
 const SubCategory = require("../model/products/SubCategory");
 const Product = require("../model/products/ProductModel");
-const User = require("../model/UserModel");
+const User = require("../model/users/UserModel");
 const ProductModel = require("../model/products/ProductModel");
-const Usersmodel = require("../model/UserModel");
+const Usersmodel = require("../model/users/UserModel");
+const OrderModel = require('../model/users/OrderModel');
+const CouponModel = require('../model/products/couponModel');
 
 // //////////  category management ///////////////
 
@@ -26,7 +28,7 @@ exports.deleteCategory = async (req, res) => {
         message: "delete",
       },
     });
-  } catch (error) {}
+  } catch (error) { }
 };
 
 exports.createSubCategory = async (req, res) => {
@@ -45,7 +47,7 @@ exports.deletesubCategory = async (req, res) => {
         message: "delete",
       },
     });
-  } catch (error) {}
+  } catch (error) { }
 };
 
 // ////////////////////////////////////////////
@@ -56,11 +58,13 @@ exports.getproductpage = async (req, res) => {
   const category = await Category.find().lean();
   const subCategory = await SubCategory.find().lean();
   const products = await Product.find().lean();
+  const coupon = await CouponModel.find().lean();
 
   res.render("admin/products/viewProduct", {
     category,
     subCategory,
     products,
+    coupon
   });
 };
 
@@ -118,30 +122,32 @@ exports.getAProduct = async (req, res) => {
   }
 };
 
-exports.editProduct=async(req,res)=>{
+exports.editProduct = async (req, res) => {
   try {
-     const category = await Category.find().lean();
-    const subcategory = await SubCategory.findOne({name:req.body.SubCategory})
+    const category = await Category.find().lean();
+    const subcategory = await SubCategory.findOne({ name: req.body.SubCategory })
     console.log(subcategory);
-    const product=await ProductModel.findByIdAndUpdate(req.params.id,req.body,{new:true});
+    const product = await ProductModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
     console.log(product);
-    res.render('admin/products/productDetails',{ product,
+    res.render('admin/products/productDetails', {
+      product,
       category,
-      subcategory,})
+      subcategory,
+    })
   } catch (error) {
     console.log(error)
   }
 }
 
-exports.deleteProduct=async(req,res)=>{
+exports.deleteProduct = async (req, res) => {
   try {
-    await Usersmodel.updateMany({},{$pull:{cart:req.params.id}})
+    await Usersmodel.updateMany({}, { $pull: { cart: req.params.id } })
     await Product.findByIdAndDelete(req.params.id);
-    res.json({message:"product deleted",url:'/admin/products'})
-    
+    res.json({ message: "product deleted", url: '/admin/products' })
+
   } catch (error) {
     console.log(error)
-    
+
   }
 }
 
@@ -180,14 +186,14 @@ exports.getAllUsers = async (req, res) => {
 //   }
 // }
 
-exports.BlockUnbolck= async(req,res)=>{
+exports.BlockUnbolck = async (req, res) => {
   try {
-    if(req.body.value === "block"){
-      await User.findByIdAndUpdate(req.params.id,{$set:{isActive:false}})
-      res.json({message:"User have been blocked"})
-    }else{
-      await User.findByIdAndUpdate(req.params.id,{$set:{isActive:true}})
-      res.json({message:"User have been unblocked"})
+    if (req.body.value === "block") {
+      await User.findByIdAndUpdate(req.params.id, { $set: { isActive: false } })
+      res.json({ message: "User have been blocked" })
+    } else {
+      await User.findByIdAndUpdate(req.params.id, { $set: { isActive: true } })
+      res.json({ message: "User have been unblocked" })
     }
   } catch (error) {
     console.log(error);
@@ -197,3 +203,67 @@ exports.BlockUnbolck= async(req,res)=>{
 
 
 ///////////////////////////////////////////////
+
+
+////////////////// order management /////////////
+
+exports.getAllorders = async (req, res) => {
+  try {
+    const orders = await OrderModel.find()
+
+    res.render('admin/orders/order', { orders })
+
+  } catch (error) {
+
+  }
+}
+
+exports.getAOrder = async (req, res) => {
+  try {
+    const order = await OrderModel.findById(req.params.id).populate({ path: 'order', populate: { path: 'product' } })
+    console.log(order)
+    res.render('admin/orders/orderDetials', { order })
+  } catch (error) {
+
+  }
+}
+
+exports.UpdateStatus = async (req, res) => {
+  try {
+    const order = await OrderModel.findByIdAndUpdate(req.params.id, { $set: { status: req.body.status } })
+    console.log(order)
+    res.json({ message: "order updated successfully" })
+  } catch (error) {
+    console.log(error)
+
+  }
+}
+
+////////////////////////////////////////////////
+
+
+//////////////// coupon management ////////////
+
+exports.createCoupon = async (req, res) => {
+  try {
+    const newCoupon = await new CouponModel(req.body)
+    console.log(newCoupon);
+    newCoupon.save()
+    res.redirect('/admin/products');
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+exports.deleteCoupon = async (req, res) => {
+  try {
+    console.log(req.body)
+    await CouponModel.findByIdAndDelete(req.body.couponid).then(
+      res.json({ message: 'Coupon deleted successfully' })
+    )
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+////////////////////////////////////////////

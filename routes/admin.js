@@ -62,29 +62,49 @@ router.route("/subcategorys/:id").delete(adminController.deletesubCategory);
 /////////////product management////////////////////
 
 router.route("/products")
-.get(adminController.getproductpage);
+  .get(adminController.getproductpage);
 
 router.route("/products/:id")
-.get(adminController.getAProduct)
-.post(uploads,adminController.editProduct)
-.delete(adminController.deleteProduct)
+  .get(adminController.getAProduct)
+  .post(uploads, adminController.editProduct)
+  .delete(adminController.deleteProduct)
 
 router.route("/addproducts")
-.get(adminController.getAddProduct)
-.post(uploads, adminController.addProduct);
+  .get(adminController.getAddProduct)
+  .post(uploads, adminController.addProduct);
 
 ////////////////////////////////////////////////////
 
 //////////////user management//////////////////////
 router.route("/users")
-.get(verifytoken, adminController.getAllUsers)
+  .get(verifytoken, adminController.getAllUsers)
 // .post(verifytoken, adminController.createUser);
 
 router.route("/addusers")
 // .get(verifytoken, adminController.getCreateUser);
 
 router.route("/users/:id")
-.post(adminController.BlockUnbolck);
+  .post(adminController.BlockUnbolck);
 // .patch(adminController.getUpdateUser)
+
+
+
+/////////////// order management ///////////////
+
+router.route('/orders')
+  .get(adminController.getAllorders);
+
+router.route('/orders/:id')
+  .get(adminController.getAOrder)
+  .patch(adminController.UpdateStatus)
+
+////////////////////////////////////////////////
+
+///////////// coupon ////////////////////////////
+router.route('/coupon')
+  .post(adminController.createCoupon)
+  .patch(adminController.deleteCoupon)
+
+////////////////////////////////////////////////
 
 module.exports = router;

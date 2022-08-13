@@ -1,0 +1,152 @@
+<header class="section-header">
+    <nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTop4">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> Language </a>
+                        <ul class="dropdown-menu small">
+                            <li><a class="dropdown-item" href="#">English</a></li>
+                            <li><a class="dropdown-item" href="#">Arabic</a></li>
+                            <li><a class="dropdown-item" href="#">Russian </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> USD </a>
+                        <ul class="dropdown-menu small">
+                            <li><a class="dropdown-item" href="#">EUR</a></li>
+                            <li><a class="dropdown-item" href="#">AED</a></li>
+                            <li><a class="dropdown-item" href="#">RUBL </a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li><a href="#" class="nav-link"> <i class="fa fa-envelope"></i> Email </a></li>
+                    <li><a href="#" class="nav-link"> <i class="fa fa-phone"></i> Call us </a></li>
+                </ul> <!-- list-inline //  -->
+            </div> <!-- navbar-collapse .// -->
+        </div> <!-- container //  -->
+    </nav>
+
+    <section class="header-main border-bottom">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-2 col-md-3 col-6">
+                    <a href="./" class="brand-wrap">
+                        <img class="logo" src="./images/logo.png">
+                    </a> <!-- brand-wrap.// -->
+                </div>
+                <a href="/users/{{user._id}}" class="btn btn-outline-primary">Store</a>
+                <div class="col-lg  col-md-6 col-sm-12 col">
+                    <form action="#" class="search">
+                        <div class="input-group w-100">
+                            <input type="text" class="form-control" style="width:60%;" placeholder="Search">
+
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form> <!-- search-wrap .end// -->
+                </div> <!-- col.// -->
+                <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
+                    <div class="d-flex justify-content-end mb-3 mb-lg-0">
+                        <a href="/users/{{user._id}}/carts" class="widget-header pl-3 ml-3">
+                            <div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i>
+                            </div>
+                            <span class="badge badge-pill badge-danger notify">0</span>
+                        </a>
+                    </div> <!-- widgets-wrap.// -->
+                </div> <!-- col.// -->
+            </div> <!-- row.// -->
+        </div> <!-- container.// -->
+    </section> <!-- header-main .// -->
+
+
+
+</header> <!-- section-header.// -->
+
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-conten padding-y bg">
+
+    <div class="container">
+        <div class="row">
+            <aside class="col-md-3">
+                <!--   SIDEBAR   -->
+                <ul class="list-group">
+                    <a class="list-group-item " href="/users/{{user._id}}/profile" id="profile"> My Profile </a>
+                    <a class="list-group-item active" href="/users/{{user._id}}/orders" id="order"> My orders </a>
+                    <a class="list-group-item" href="/users/{{user._id}}/address" id="address">Address</a>
+                </ul>
+                <br>
+                <a class="btn btn-light btn-block" href="/logout"> <i class="fa fa-power-off"></i> <span
+                        class="text">Log
+                        out</span> </a>
+                <!--   SIDEBAR .//END   -->
+            </aside>
+
+
+
+
+
+
+            {{!-- order --}}
+
+
+            <main class="col-md-9" id="orderBody">
+                <article class="card">
+                    <div class="table-responsive">
+                        <header class="card-header">
+                            <strong class="d-inline-block mr-3">All Orders</strong>
+                        </header>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                {{#each orders}}
+                                <tr>
+
+                                    <td>
+                                        <p class="title mb-0">Order Id </p>
+                                        <var class="price text-muted">{{this._id}}</var>
+                                    </td>
+                                    <td> Status <br>{{this.status}}</td>
+                                    <td width="250"> <a href="#" class="btn btn-outline-primary">Track
+                                            order</a> <a href="/users/{{../user._id}}/orders/{{this._id}}"
+                                            class="btn btn-light"> Details </a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </table>
+                        </div> <!-- table-responsive .end// -->
+                </article> <!-- order-group.// -->
+            </main>
+        </div> <!-- row.// -->
+    </div>
+
+
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+<!-- ========================= FOOTER ========================= -->
+<footer class="section-footer border-top padding-y">
+    <div class="container">
+        <p class="float-md-right">
+            &copy Copyright 2019 All rights reserved
+        </p>
+        <p>
+            <a href="#">Terms and conditions</a>
+        </p>
+    </div><!-- //container -->
+</footer>
+<!-- ========================= FOOTER END // ========================= -->
+
+
+
+</body>

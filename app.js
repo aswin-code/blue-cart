@@ -4,31 +4,47 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
-const hbs = require("express-handlebars");
+const expbs = require("express-handlebars");
 const Handlebars = require("handlebars");
 const { allowInsecurePrototypeAccess } = require("@handlebars/allow-prototype-access");
 
 const homeRouter = require("./routes/home");
 const usersRouter = require("./routes/users");
 const adminRouter = require("./routes/admin");
+const orderRouter = require('./routes/order')
 const mongoose = require("moongoose");
 const authRouter = require("./routes/auth");
 
 const app = express();
 
 // view engine setup
+const hbs = expbs.create({
+  extname: "hbs",
+  defaultLayout: "layout",
+  layoutsDir: __dirname + "/views/layouts",
+  partialsDir: __dirname + "/views/partials",
+  handlebars: allowInsecurePrototypeAccess(Handlebars),
+  helpers: {
+    sum: function (price) {
+      return price + 50 * 1;
+    },
+    check: function (length) {
+      if (length == 0) {
+        return true
+      } else {
+        return false
+      }
+    }
+  }
+})
+
 app.set("views", path.join(__dirname, "views"));
+app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
-app.engine(
-  "hbs",
-  hbs.engine({
-    extname: "hbs",
-    defaultLayout: "layout",
-    layoutsDir: __dirname + "/views/layouts",
-    partialsDir: __dirname + "/views/partials",
-    handlebars: allowInsecurePrototypeAccess(Handlebars),
-  })
-);
+
+
+
+
 
 app.use(
   bodyParser.urlencoded({
@@ -54,6 +70,7 @@ app.use("/", homeRouter);
 app.use("/users", usersRouter);
 app.use("/", authRouter);
 app.use("/admin", adminRouter);
+app.use('/order', orderRouter)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

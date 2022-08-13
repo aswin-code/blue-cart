@@ -1,7 +1,7 @@
 // signup////
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../model/UserModel');
+const User = require('../model/users/UserModel');
 const verifytokenAndAuthorization = require('../routes/verifytoken');
 
 
