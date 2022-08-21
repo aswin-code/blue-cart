@@ -1,9 +1,11 @@
 const router = require("express").Router();
 const verifytoken = require("./verifytoken");
+const verifytokenAndAuthorization = require('../routes/verifytoken');
 const Category = require("../model/products/CategoryModel");
 const SubCategory = require("../model/products/SubCategory");
 const adminController = require("../Controller/adminController");
 const multer = require("multer");
+
 
 const storage = multer.diskStorage({
   destination: "public/images/items",
@@ -16,8 +18,8 @@ const uploads = multer({
   storage,
 }).single("image");
 
-router.get("/", (req, res) => {
-  res.render("admin/adminHome");
+router.get("/home", verifytokenAndAuthorization, (req, res) => {
+  res.render("admin/adminHome", { layout: 'adminlayout' });
 });
 
 ///////////category management/////////////////
@@ -25,69 +27,43 @@ router.get("/", (req, res) => {
 router
   .route("/categorys")
 
-  .get(adminController.getcategory)
-  .post(adminController.createCategory);
+  .get(verifytokenAndAuthorization, adminController.getcategory)
+  .post(verifytokenAndAuthorization, adminController.createCategory);
 router
   .route("/categorys/:id")
-  .get(async (req, res) => {
+  .get(verifytokenAndAuthorization, async (req, res) => {
     console.log(req.params.id);
-    const subCategory = await SubCategory.find({
-      categoryName: req.params.id,
-    });
-    console.log(subCategory);
+    const category = await Category.findById(req.params.id);
     res.json({
-      subCategory,
-    });
-  })
-  .delete(adminController.deleteCategory);
-
-////////////////////////////////////////////////
-
-/////////  sub category management //////////////
-
-router
-  .route("/subcategorys")
-  .get(async (req, res) => {
-    const category = await Category.find();
-    res.render("admin/products/subcategory", {
       category,
     });
   })
-  .post(adminController.createSubCategory);
 
-router.route("/subcategorys/:id").delete(adminController.deletesubCategory);
+  .patch(verifytokenAndAuthorization, adminController.editCategory)
+  .delete(verifytokenAndAuthorization, adminController.deleteCategory);
 
-//////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+
 
 /////////////product management////////////////////
 
 router.route("/products")
-  .get(adminController.getproductpage);
+  .get(verifytokenAndAuthorization, adminController.getproductpage)
+  .post(verifytokenAndAuthorization, uploads, adminController.addProduct);
 
 router.route("/products/:id")
-  .get(adminController.getAProduct)
-  .post(uploads, adminController.editProduct)
-  .delete(adminController.deleteProduct)
+  .get(verifytokenAndAuthorization, adminController.getAProduct)
+  .post(verifytokenAndAuthorization, uploads, adminController.editProduct)
+  .delete(verifytokenAndAuthorization, adminController.deleteProduct)
 
-router.route("/addproducts")
-  .get(adminController.getAddProduct)
-  .post(uploads, adminController.addProduct);
 
 ////////////////////////////////////////////////////
 
 //////////////user management//////////////////////
 router.route("/users")
-  .get(verifytoken, adminController.getAllUsers)
-// .post(verifytoken, adminController.createUser);
-
-router.route("/addusers")
-// .get(verifytoken, adminController.getCreateUser);
-
-router.route("/users/:id")
-  .post(adminController.BlockUnbolck);
-// .patch(adminController.getUpdateUser)
-
-
+  .get(verifytokenAndAuthorization, adminController.getAllUsers)
+  .post(verifytokenAndAuthorization, adminController.BlockUnbolck)
 
 /////////////// order management ///////////////
 
@@ -106,5 +82,7 @@ router.route('/coupon')
   .patch(adminController.deleteCoupon)
 
 ////////////////////////////////////////////////
+
+router.route('/data').get(adminController.getdata)
 
 module.exports = router;

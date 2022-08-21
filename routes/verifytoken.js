@@ -36,4 +36,5 @@ const verifytokenAndAuthorization = (req, res, next) => {
         }
     })
 }
+
 module.exports = verifytokenAndAuthorization

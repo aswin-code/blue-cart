@@ -12,6 +12,7 @@ router.route("/:id")
 // ////////////product management ////////////////////////
 router.route('/:userid/products/:id')
   .get(UserController.getProducts)
+  .post(UserController.getoverview)
 
 //////////////////////////////////////////////////////////
 

@@ -1,0 +1,66 @@
+<div class="main--content">
+    <div class="recent--patients table-content">
+        <div class="title">
+            <h2 class="section--title">All Users</h2>
+
+        </div>
+        <div class="table">
+            <table id="user-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Settings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each users}}
+                    <tr>
+                        <td>{{this.fname}}</td>
+                        <td>{{this.email}}</td>
+                        {{#if this.isActive}}
+                        <td class="confirmed">Active</td>
+                        {{else}}
+                        <td class="rejected">Blocked</td>
+                        {{/if}}
+                        <td> {{#if this.isActive}}<button class="btn btn-danger block"
+                                user-id="{{this._id}}">Block</button>{{else}}<button class="btn btn-success unblock"
+                                user-id="{{this._id}}">UnBlock</button>{{/if}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#user-table').DataTable();
+
+    });
+</script>
+
+
+<script>
+    const BB = function (userid) {
+        axios.post('', {
+            userid
+        }).then(e => {
+            window.location.reload()
+        })
+    }
+    $('.block').click(function () {
+        const userid = $(this).attr('user-id')
+        confirm('Do you want to Block this user')
+        BB(userid)
+
+    })
+    $('.unblock').click(function () {
+        const userid = $(this).attr('user-id')
+        confirm('Do you want to Unblock this user')
+        BB(userid)
+    })
+</script>

@@ -6,28 +6,10 @@
   <meta http-equiv="pragma" content="no-cache" />
   <meta http-equiv="cache-control" content="max-age=604800" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <title>GreatKart | One of the Biggest Online Shopping Platform</title>
-
-  <link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
-
-  <!-- jQuery -->
-  <script src="/js/jquery-2.0.0.min.js" type="text/javascript"></script>
-
-  <!-- Bootstrap4 files-->
-  <script src="/js/bootstrap.bundle.min.js" type="text/javascript"></script>
-  <link href="/css/bootstrap.css" rel="stylesheet" type="text/css" />
-
-  <!-- Font awesome 5 -->
-  <link href="/fonts/fontawesome/css/all.min.css" type="text/css" rel="stylesheet">
-
-  <!-- custom style -->
-  <link href="/css/ui.css" rel="stylesheet" type="text/css" />
-  <link href="/css/responsive.css" rel="stylesheet" media="only screen and (max-width: 1200px)" />
-
-
-
-
+  <title>Product Detail</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--===============================================================================================-->
   <link rel="icon" type="image/png" href="/images/icons/favicon.png" />
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
@@ -64,19 +46,9 @@
   <!-- custom javascript -->
   <script src="/js/script.js" type="text/javascript"></script>
 
+
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script type="text/javascript">
-
-
-
-
-
-
-
-
-
-
-
     /// some script
 
     // jquery ready start
@@ -84,12 +56,126 @@
       // jQuery code
 
     });
-// jquery end
+  // jquery end
   </script>
 </head>
 
 <body>
   {{{body}}}
+
+
+
+  <!--===============================================================================================-->
+  <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="/vendor/animsition/js/animsition.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="/vendor/bootstrap/js/popper.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="/vendor/select2/select2.min.js"></script>
+  <script>
+
+
+    $(".js-select2").each(function () {
+      $(this).select2({
+        minimumResultsForSearch: 20,
+        dropdownParent: $(this).next('.dropDownSelect2')
+      });
+    })
+  </script>
+  <!--===============================================================================================-->
+  <script src="/vendor/slick/slick.min.js"></script>
+  <script src="/js/slick-custom.js"></script>
+  <!--===============================================================================================-->
+  <script src="/vendor/parallax100/parallax100.js"></script>
+  <script>
+    $('.parallax100').parallax100();
+  </script>
+  <!--===============================================================================================-->
+  <script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+  <script>
+    $('.gallery-lb').each(function () { // the containers for all your galleries
+      $(this).magnificPopup({
+        delegate: 'a', // the selector for gallery item
+        type: 'image',
+        gallery: {
+          enabled: true
+        },
+        mainClass: 'mfp-fade'
+      });
+    });
+  </script>
+  <!--===============================================================================================-->
+  <script src="/vendor/isotope/isotope.pkgd.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="/vendor/sweetalert/sweetalert.min.js"></script>
+  <script>
+    $('.js-addwish-b2').on('click', function (e) {
+      e.preventDefault();
+    });
+
+    $('.js-addwish-b2').each(function () {
+      var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+      $(this).on('click', function () {
+        swal(nameProduct, "is added to wishlist !", "success");
+
+        $(this).addClass('js-addedwish-b2');
+        $(this).off('click');
+      });
+    });
+
+    $('.js-addwish-detail').each(function () {
+      var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+      $(this).on('click', function () {
+        swal(nameProduct, "is added to wishlist !", "success");
+
+        $(this).addClass('js-addedwish-detail');
+        $(this).off('click');
+      });
+    });
+
+    /*---------------------------------------------*/
+
+    $('.js-addcart-detail').click(function () {
+      var nameProduct = $('.js-name-detail').text();
+      const userid = $(this).attr('userid')
+      const qty = document.getElementById('num-product').value
+      const productid = $(this).attr('productid')
+      console.log(productid)
+      axios.post(`/users/${userid}/carts`, {
+
+        productid,
+        qty
+      }).then(e => {
+        console.log(e.data)
+        $('.icon-header-noti').attr('data-notify', `${e.data.user.cart.length}`)
+        swal(nameProduct, "is added to cart !", "success");
+      })
+    });
+  </script>
+  <!--===============================================================================================-->
+  <script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+  <script>
+    $('.js-pscroll').each(function () {
+      $(this).css('position', 'relative');
+      $(this).css('overflow', 'hidden');
+      var ps = new PerfectScrollbar(this, {
+        wheelSpeed: 1,
+        scrollingThreshold: 1000,
+        wheelPropagation: false,
+      });
+
+      $(window).on('resize', function () {
+        ps.update();
+      })
+    });
+  </script>
+  <!--===============================================================================================-->
+  <script src="/js/main.js"></script>
+
 </body>
+
 
 </html>

@@ -79,12 +79,12 @@ exports.postSignin = async (req, res) => {
         const user = await User.findOne({
             email
         });
-        if(!user.isActive){
+        if (!user.isActive) {
             res.json({
-                status:"blocked",
-                message:"sorry your account has been disabled"
+                status: "blocked",
+                message: "sorry your account has been disabled"
             })
-        }else{
+        } else {
 
             if (user) {
                 bcrypt.compare(password, user.password).then(data => {
@@ -96,10 +96,12 @@ exports.postSignin = async (req, res) => {
                         }, process.env.JWT_SECRTKEY);
                         if (user.isAdmin) {
                             res.cookie('jwt', token, {
+                                // expires: new Date(Date.now() + 10 * 1000),  
                                 httpOnly: true
                             }).redirect(`/admin`);
                         } else {
                             res.cookie('jwt', token, {
+                                // expires: new Date(Date.now() + 1000 * 10000),
                                 httpOnly: true
                             }).redirect(`/users/${user._id}`);
                         }
@@ -110,7 +112,7 @@ exports.postSignin = async (req, res) => {
                                 message: "invaild email or password"
                             }
                         });
-                        
+
                     }
                 })
             } else {
@@ -120,12 +122,12 @@ exports.postSignin = async (req, res) => {
                         message: "invaild email or password"
                     }
                 });
-                
+
             }
-            
+
         }
-            
-            
+
+
     } catch (err) {
         console.log(err);
 
@@ -138,5 +140,8 @@ exports.postSignin = async (req, res) => {
 
 exports.logout = (req, res) => {
 
-    res.clearCookie('jwt').redirect('/signin');
+    res.cookie('jwt', 'loggedout', {
+        expires: new Date(Date.now() + 10 * 1000),
+        httpOnly: true
+    }).redirect('/signin');
 }

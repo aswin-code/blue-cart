@@ -9,15 +9,25 @@ const CouponModel = require('../model/products/couponModel');
 
 // //////////  category management ///////////////
 
-exports.getcategory = (req, res) => {
-  res.render("admin/products/category");
+exports.getcategory = async (req, res) => {
+  const category = await Category.find().lean()
+  res.render("admin/category", { layout: 'adminlayout', category });
 };
 
 exports.createCategory = async (req, res) => {
   const newCategory = await new Category(req.body);
   newCategory.save();
-  res.redirect("/admin/products");
+  res.redirect("/admin/categorys");
 };
+
+exports.editCategory = async (req, res) => {
+  try {
+    await Category.findByIdAndUpdate(req.params.id, { $set: req.body })
+    res.json({ message: 'categor edited successfully' })
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 exports.deleteCategory = async (req, res) => {
   try {
@@ -60,7 +70,8 @@ exports.getproductpage = async (req, res) => {
   const products = await Product.find().lean();
   const coupon = await CouponModel.find().lean();
 
-  res.render("admin/products/viewProduct", {
+  res.render("admin/products", {
+    layout: "adminlayout",
     category,
     subCategory,
     products,
@@ -77,45 +88,32 @@ exports.getAddProduct = async (req, res) => {
   });
 };
 
+
+
 exports.addProduct = async (req, res) => {
-  const brandName = req.body.brandName;
-  const productName = req.body.productName;
-  const price = req.body.price;
-  const discountPrice = req.body.discountPrice;
-  const stock = req.body.stock;
-  const size = req.body.price;
-  const description = req.body.description;
-  const subCategory = req.body.subCategory;
-  console.log(subCategory);
+  const { brandName, productName, price, discountPrice, stock, size, description, subCategory } = req.body
+
   const image = req.file.filename;
 
-  const newProduct = await new Product({
-    brandName,
-    productName,
-    price,
-    discountPrice,
-    stock,
-    size,
-    description,
-    subCategory,
-    image,
-  });
+  const newProduct = await new Product({ brandName, productName, price, discountPrice, stock, size, description, subCategory, image, });
+
   newProduct.save();
+
   res.redirect("/admin/products");
 };
+
+
 
 exports.getAProduct = async (req, res) => {
   try {
     const category = await Category.find().lean();
-    const subCategory = await SubCategory.find().lean();
     const product = await Product.findById(req.params.id);
     const subcategory = await SubCategory.findById(product.subCategory).populate("categoryName").lean();
     console.log(subcategory);
-    res.render("admin/products/productDetails", {
+    res.render("admin/editproduct", {
+      layout: 'adminlayout',
       product,
-      subcategory,
       category,
-      subCategory,
     });
   } catch (error) {
     console.log(error);
@@ -129,11 +127,7 @@ exports.editProduct = async (req, res) => {
     console.log(subcategory);
     const product = await ProductModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
     console.log(product);
-    res.render('admin/products/productDetails', {
-      product,
-      category,
-      subcategory,
-    })
+    res.redirect('/admin/products')
   } catch (error) {
     console.log(error)
   }
@@ -156,62 +150,41 @@ exports.deleteProduct = async (req, res) => {
 // ///////////  user managemnet ///////////////
 
 exports.getAllUsers = async (req, res) => {
-  const user = await User.find({
+  const users = await User.find({
     isAdmin: false,
   }).lean();
-  res.render("admin/users/viewUser", {
-    user,
+  res.render("admin/users", {
+    layout: "adminlayout",
+    users,
   });
 };
 
-// exports.getCreateUser = (req, res) => {
-//   res.render("admin/users/addUser");
-// };
-
-// exports.createUser = async (req, res) => {
-//   try {
-//     console.log(req.body);
-//     const newUser = await new User(req.body);
-//     const result = newUser.save().then((e) => {
-//       res.json({
-//         status: "success",
-//         data: {
-//           url:"/admin/users"
-//         },
-//       });
-//     });
-//     console.log(result);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
 exports.BlockUnbolck = async (req, res) => {
   try {
-    if (req.body.value === "block") {
-      await User.findByIdAndUpdate(req.params.id, { $set: { isActive: false } })
-      res.json({ message: "User have been blocked" })
-    } else {
-      await User.findByIdAndUpdate(req.params.id, { $set: { isActive: true } })
-      res.json({ message: "User have been unblocked" })
+
+    const { isActive } = await User.findById(req.body.userid)
+    if (isActive) {
+      await User.findByIdAndUpdate(req.body.userid, { $set: { isActive: false } });
+      res.json({ message: "User have been blocked" });
+      return
     }
+    await User.findByIdAndUpdate(req.body.userid, { $set: { isActive: true } })
+    res.json({ message: "User have been unblocked" })
   } catch (error) {
     console.log(error);
   }
 }
 
-
-
 ///////////////////////////////////////////////
 
 
-////////////////// order management /////////////
+//============ order management ==================//
 
 exports.getAllorders = async (req, res) => {
   try {
     const orders = await OrderModel.find()
 
-    res.render('admin/orders/order', { orders })
+    res.render('admin/orders', { layout: "adminlayout", orders })
 
   } catch (error) {
 
@@ -222,7 +195,7 @@ exports.getAOrder = async (req, res) => {
   try {
     const order = await OrderModel.findById(req.params.id).populate({ path: 'order', populate: { path: 'product' } })
     console.log(order)
-    res.render('admin/orders/orderDetials', { order })
+    res.render('admin/orderDetail', { layout: "adminlayout", order })
   } catch (error) {
 
   }
@@ -267,3 +240,20 @@ exports.deleteCoupon = async (req, res) => {
 }
 
 ////////////////////////////////////////////
+
+
+exports.getdata = async (req, res) => {
+  const orders = await OrderModel.find()
+  const totalOrders = orders.length
+  const sales = await orders.reduce((acc, crr) => {
+    if (crr.paid) {
+
+      acc++
+    }
+    return acc
+  }, 0);
+
+
+
+  console.log(sales)
+}

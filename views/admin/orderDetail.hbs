@@ -1,0 +1,74 @@
+<div class="main--content d-flex justify-conten-center align-items-center ">
+    <div class="row ">
+        <div class="col-8 d-flex justify-content-between g-2">
+            {{#each order.order}}
+            <div class="card mb-3" style="max-width: 500px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="/images/items/{{this.product.image}}" class="img-fluid rounded-start h-100" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h4 class="card-title text-muted">{{this.product.brandName}}</h4>
+                            <h5 class="card-title  pb-4 ">{{this.product.productName}}</h5>
+                            <p class="card-text">Quantity : {{this.qty}}</p>
+                            <p class="card-text">Total : {{this.total}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        <div class="col-4">
+            <div class="card" style="width:75%;">
+                <div class="card-body">
+                    <h5 class="card-title pb-4">Order Summary</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="card-text">total:</p>
+                            <p>Payment Type</p>
+                            <p> Paid </p>
+                            <p>Status</p>
+                            <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{order.status}}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item  btn-success order" href="#" value="confrim">Confirm
+                                        Order</a>
+                                    <a class="dropdown-item btn-success order" href="#" value="out for delivery">Out For
+                                        Delivery</a>
+                                    <a class="dropdown-item btn-success order" href="#" value="delivery">Delivered</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <p class="card-text">{{order.totalBill}}</p>
+                            <p> {{order.paymentType}}</p>
+                            {{#if order.paid}}
+                            <p class="text-success">Paid</p>
+                            {{else}}
+                            <p class="text-danger">UnPaid</p>
+                            {{/if}}
+                            <p>{{order.status}}</p>
+                            <button class="btn btn-danger order" value="canceled"> Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.order').click(function () {
+            axios.patch('', {
+                status: $(this).attr('value')
+            }).then(e => {
+                window.location.reload()
+            })
+        })
+    })
+</script>

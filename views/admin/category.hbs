@@ -1,0 +1,123 @@
+<div class="main--content">
+    <div class="recent--patients table-content">
+        <div class="title">
+            <h2 class="section--title">All Products</h2>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addmodal">
+                Add Category
+            </button>
+        </div>
+        <div class="table">
+            <table id="category-table">
+                <thead>
+                    <tr>
+                        <th>category</th>
+                        <th>Settings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each category}}
+                    <tr>
+                        <td>{{this.name}}</td>
+
+                        <td><span><a class="edit-category" data-toggle="modal" data-target="#editmodal"
+                                    categoryid="{{this._id}}"><i class="ri-edit-line edit"></i></a>
+                                <a class="delete-category" categoryid="{{this._id}}"><i
+                                        class="ri-delete-bin-line delete"></i></a></span>
+                        </td>
+
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Add Modal -->
+<div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Category</label>
+                    <input type="text" name="name" id="edit-input" aria-describedby="emailHelp"
+                        placeholder="Enter Category">
+                    <small id="emailHelp" class="form-text text-muted">Please enter category.</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary edit-btn">Edit Category</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action=" " method="post">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Category</label>
+                        <input type="text" name="name" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="Enter Category">
+                        <small id="emailHelp" class="form-text text-muted">Please enter category.</small>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add category</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#category-table').DataTable();
+
+        $('.edit-category').click(async function () {
+            const categoryid = $(this).attr('categoryid')
+            await axios.get(`/admin/categorys/${categoryid}`).then(e => {
+                $("#edit-input").attr('value', e.data.category.name)
+            })
+            $('.edit-btn').click(async function () {
+                await axios.patch(`/admin/categorys/${categoryid}`, {
+                    name: $('#edit-input').val()
+                }).then(e => {
+                    window.location.reload();
+                })
+            })
+        });
+
+        $('.delete-category').click(async function () {
+            const categoryid = $(this).attr('categoryid')
+            await axios.delete(`/admin/categorys/${categoryid}`).then(e => {
+                window.location.reload();
+            })
+        })
+
+
+
+    });
+</script>

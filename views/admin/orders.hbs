@@ -1,0 +1,48 @@
+<div class="main--content">
+
+    <div class="recent--patients table-content">
+        <div class="title">
+            <h2 class="section--title">All Products</h2>
+            <button class="add-product"><i class="ri-add-line"></i>Add Product</button>
+        </div>
+        <div class="table">
+            <table id="orders-table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Total Bill</th>
+                        <th>Paid</th>
+                        <th>Status</th>
+                        <th>Settings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each orders}}
+                    <tr>
+                        <td><a href='/admin/orders/{{this._id}}'>{{this._id}}</a></td>
+
+                        <td>{{this.totalBill}}</td>
+                        {{#if this.paid}}
+                        <td>Paid</td>
+                        {{else}}
+                        <td>UnPaid</td>
+                        {{/if}}
+                        <td>{{this.status}}</td>
+                        <td><span><a href="/admin/orders/{{this._id}}"><i class="ri-edit-line edit"></i></a></span>
+                        </td>
+
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+
+        $('#orders-table').DataTable();
+
+    });
+</script>

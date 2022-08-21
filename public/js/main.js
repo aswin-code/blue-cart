@@ -364,7 +364,7 @@
         e.preventDefault();
         const userid = $(this).attr('userid')
         const proid = $(this).attr('proid')
-        axios.get(`/users/${userid}/products/${proid}`, {}).then(e => {
+        axios.post(`/users/${userid}/products/${proid}`, {}).then(e => {
 
             $('.modal1name').text(e.data.product.productName)
             $('.modal1price').text('₹' + e.data.product.discountPrice)

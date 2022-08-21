@@ -1,0 +1,36 @@
+<div class="main--content ">
+    <div class="recent--patients table-content">
+        <div class="title">
+            <h2 class="section--title">Shipping Address</h2>
+        </div>
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Adrress</th>
+                        <th>State</th>
+                        <th>City</th>
+                        <th>Pin</th>
+                        <th>Settings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each address}}
+                    {{#each this.address}}
+
+                    <tr>
+                        <td>{{this.address}}</td>
+                        <td>{{this.state}}</td>
+                        <td>{{this.city}}</td>
+                        <td>{{this.pin}}</td>
+                        <td><span><a data-toggle="modal" data-target="#editmodal"><i class="ri-edit-line edit"
+                                        addressid="{{this._id}}"></i></a><i
+                                    class="ri-delete-bin-line delete"></i></span></td>
+                    </tr>
+                    {{/each}}
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

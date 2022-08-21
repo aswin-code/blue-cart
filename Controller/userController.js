@@ -6,6 +6,7 @@ const Cart = require("../model/users/CartModel");
 const Order = require('../model/users/OrderModel');
 const Coupon = require('../model/products/couponModel');
 
+
 const addressModel = require('../model/users/adressModel');
 const { set } = require("mongoose");
 const ProductModel = require("../model/products/ProductModel");
@@ -21,7 +22,7 @@ exports.getUserPage = async (req, res, next) => {
   const category = await Category.find()
   const products = await Product.find().populate({ path: 'subCategory', populate: { path: 'categoryName' } })
   const user = await Usersmodel.findById(req.params.id).populate({ path: 'cart', populate: { path: 'product' } })
-  res.render("store", { products, user, category });
+  res.render("user/store", { products, user, category });
 }
 
 // ////////////product management ////////////////////////
@@ -29,15 +30,31 @@ exports.getUserPage = async (req, res, next) => {
 exports.getAllProducts = async (req, res) => {
   const user = await Usersmodel.findById(req.params.userid);
   const product = await Product.find();
-  res.render('productPage', { user, product })
+  res.render('user/productPage', { user, product })
 }
 
 exports.getProducts = async (req, res) => {
   try {
-    console.log(req.params.userid)
+
 
     const user = await Usersmodel.findById(req.params.userid);
     const product = await Product.findById(req.params.id);
+    console.log(req.body)
+    if (req.body.quick) return res.json({ product, user });
+    res.render('user/productdetail', { user, product })
+
+  } catch (error) {
+
+  }
+}
+
+exports.getoverview = async (req, res) => {
+  try {
+
+
+    const user = await Usersmodel.findById(req.params.userid);
+    const product = await Product.findById(req.params.id);
+    console.log(req.body)
     res.json({ product, user });
 
   } catch (error) {
@@ -64,7 +81,7 @@ exports.getCartpage = async (req, res) => {
   try {
     const user = await Usersmodel.findById(req.params.id).populate({ path: 'cart', populate: { path: 'product' } })
     let total = findtotal(user)
-    res.render('cart', { user, total });
+    res.render('user/cart', { user, total });
 
   } catch (error) {
     console.log(error);
@@ -117,8 +134,11 @@ exports.patchCart = async (req, res) => {
 ////////////////// user profile /////////////////////////
 
 exports.getProfilePage = async (req, res) => {
-  const user = await Usersmodel.findById(req.params.id).lean()
-  res.render('user/userProfile', { user })
+  const orders = await Order.find({ userid: req.params.id }).lean()
+  const user = await Usersmodel.findById(req.params.id).populate('address').lean()
+
+  console.log(orders)
+  res.render('user/profile/userProfile', { layout: 'userProfileLayout', user, orders })
 
 }
 
@@ -140,8 +160,8 @@ exports.getAddress = async (req, res) => {
   const user = await Usersmodel.findById(req.params.id)
 
   const address = await addressModel.find({ userid: req.params.id }).populate('address')
-  console.log(user)
-  res.render('user/addresspage', { user, address })
+  console.log(address)
+  res.render('user/addresspage', { layout: 'userProfileLayout', user, address })
 
 }
 
@@ -294,6 +314,8 @@ exports.cashOnDelivery = async (req, res) => {
 exports.getAllOrder = async (req, res) => {
   const user = await Usersmodel.findById(req.params.id)
   const orders = await Order.find({ userid: req.params.id }).populate({ path: 'order', populate: { path: 'product' } })
+
+
   res.render('user/order', { orders, user })
 
 }
@@ -302,8 +324,13 @@ exports.getAOrder = async (req, res) => {
   try {
     console.log(req.params.orderid)
     const order = await Order.findById(req.params.orderid).populate({ path: 'order', populate: { path: 'product' } })
-    console.log(order)
-    res.render('user/orderDetails', { order })
+
+    const total = order.order.reduce((acc, curr) => {
+      return acc + curr.total
+    }, 0)
+    console.log(total)
+
+    res.render('user/orderDetails', { order, total })
   } catch (error) {
 
 
