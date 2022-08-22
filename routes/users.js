@@ -48,6 +48,11 @@ router.route('/:id/address')
   .post(UserController.postAddress)
   .delete(UserController.deleteAddress)
 
+
+router.route('/:id/address/:addid')
+  .get(UserController.getAAddress)
+  .post(UserController.editAddress)
+
 ////////////////////////////////////////////////////////////
 
 module.exports = router;

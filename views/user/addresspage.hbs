@@ -2,6 +2,7 @@
   <div class="recent--patients table-content">
     <div class="title">
       <h2 class="section--title">Shipping Address</h2>
+      <button class="btn btn-primary" data-toggle="modal" data-target="#add-address">Add Address</button>
     </div>
     <div class="table">
       <table>
@@ -23,8 +24,9 @@
             <td>{{this.state}}</td>
             <td>{{this.city}}</td>
             <td>{{this.pin}}</td>
-            <td><span><a data-toggle="modal" data-target="#editmodal"><i class="ri-edit-line edit"
-                    addressid="{{this._id}}"></i></a><i class="ri-delete-bin-line delete"></i></span></td>
+            <td><span><a data-toggle="modal" data-target=".bd-example-modal-lg"><i class="ri-edit-line edit"
+                    addressid="{{this._id}}"></i></a><i class="ri-delete-bin-line delete"
+                  onclick="removeAddress('{{this._id}}')"></i></span></td>
           </tr>
           {{/each}}
           {{/each}}
@@ -34,35 +36,196 @@
   </div>
 </div>
 <!-- ================ Edit Modal  ======================= -->
-<div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Edit Category</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
+      <div class="container py-5">
+        <div class="row d-flex justify-content-center align-items-center">
+          <div class="col">
+            <div class="card my-4 shadow-3">
+              <div class="row g-0 align-items-center justify-content-cente">
+                <div class="col-xl-6 d-xl-block bg-image position-relative">
 
-        <div class="form-group">
-          <label for="exampleInputEmail1">Category</label>
-          <input type="text" name="name" id="edit-input" aria-describedby="emailHelp" placeholder="Enter Category">
-          <small id="emailHelp" class="form-text text-muted">Please enter category.</small>
+                  <img src="https://mdbcdn.b-cdn.net/img/Others/extended-example/delivery.webp" alt="Sample photo"
+                    class="img-fluid" style="position:relative;" />
+                  <div class="position-absolute" style="top:50%; left:25%; ">
+
+
+
+                    <i class="fas fa-quote-left fa-xs text-primary" style="color: hsl(210, 100%, 50%) ;"></i>
+                    <span class="lead font-italic">Everything at your
+                      doorstep.</span>
+                    <i class="fas fa-quote-right fa-xs text-primary" style="color: hsl(210, 100%, 50%) ;"></i>
+
+                  </div>
+                </div>
+                <div class="col-xl-6">
+                  <div class="card-body p-md-5 text-black">
+                    <h3 class="mb-4 text-uppercase">Delivery Info</h3>
+
+
+                    <form id="address-form" method="post">
+                      <div class="form-outline mb-4">
+                        <input type="text" class="form-control form-control-lg" name="address" id="address" value="" />
+                        <label class="form-label" for="form3Example8">Address</label>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-12 mb-4">
+                          <div class="rs1-select2 bor8 bg0">
+                            <select class="w-100" name="state" id="state">
+                              <option id="selected-state">State</option>
+                              <option>Kerala</option>
+
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                          </div>
+
+                        </div>
+                        <div class="col-md-12 mb-4">
+
+                          <div class="rs1-select2 bor8 bg0">
+                            <select class="w-100" name="city" id="city">
+                              <option id="selected-city">City</option>
+                              <option>Calicut</option>
+                              <option>Kannur</option>
+                              <option>Kochi</option>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="form-outline mb-4">
+                        <input type="number" class="form-control form-control-lg" maxlength="4" name="pin" id="pin"
+                          size="4" />
+                        <label class="form-label" for="form3Example3">Pin</label>
+                      </div>
+
+                      <div class="d-flex justify-content-end pt-3">
+                        <button type="submit" class=" pointer bg-dark"
+                          style="background-color:hsl(210, 100%, 50%) ">Edit
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary edit-btn">Edit Category</button>
-
-      </div>
-
     </div>
   </div>
 </div>
+
+
+<!--Add Modal -->
+<div class="modal fade bd-example-modal-lg" id="add-address" tabindex="-1" role="dialog"
+  aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="container py-5">
+        <div class="row d-flex justify-content-center align-items-center">
+          <div class="col">
+            <div class="card my-4 shadow-3">
+              <div class="row g-0 align-items-center justify-content-cente">
+                <div class="col-xl-6 d-xl-block bg-image position-relative">
+
+                  <img src="https://mdbcdn.b-cdn.net/img/Others/extended-example/delivery.webp" alt="Sample photo"
+                    class="img-fluid" style="position:relative;" />
+                  <div class="position-absolute" style="top:50%; left:25%; ">
+
+
+
+                    <i class="fas fa-quote-left fa-xs text-primary" style="color: hsl(210, 100%, 50%) ;"></i>
+                    <span class="lead font-italic">Everything at your
+                      doorstep.</span>
+                    <i class="fas fa-quote-right fa-xs text-primary" style="color: hsl(210, 100%, 50%) ;"></i>
+
+                  </div>
+                </div>
+                <div class="col-xl-6">
+                  <div class="card-body p-md-5 text-black">
+                    <h3 class="mb-4 text-uppercase">Delivery Info</h3>
+
+
+                    <form action="" method="post">
+                      <div class="form-outline mb-4">
+                        <input type="text" class="form-control form-control-lg" name="address" />
+                        <label class="form-label" for="form3Example8">Address</label>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-12 mb-4">
+                          <div class="rs1-select2 bor8 bg0">
+                            <select class="w-100" name="state">
+                              <option>State</option>
+                              <option>Kerala</option>
+
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                          </div>
+
+                        </div>
+                        <div class="col-md-12 mb-4">
+
+                          <div class="rs1-select2 bor8 bg0">
+                            <select class="w-100" name="city">
+                              <option>State</option>
+                              <option>Calicut</option>
+                              <option>Kannur</option>
+                              <option>Kochi</option>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="form-outline mb-4">
+                        <input type="number" class="form-control form-control-lg" maxlength="4" name="pin" size="4" />
+                        <label class="form-label" for="form3Example3">Pin</label>
+                      </div>
+
+                      <div class="d-flex justify-content-end pt-3">
+                        <button type="submit"
+                          class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer bg-dark"
+                          style="background-color:hsl(210, 100%, 50%) ">Add
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ========================= FOOTER END // ========================= -->
 <script>
+  $(document).ready(function () {
+    $('.edit').click(async function () {
+      const addid = $(this).attr('addressid')
+
+      await axios.get(`address/${addid}`).then(e => {
+        $('#address').val(e.data.address[0].address)
+        $('#pin').val(e.data.address[0].pin)
+        $('#selected-city').text(e.data.address[0].city)
+        $('#selected-state').text(e.data.address[0].state)
+        $('#address-form').attr('action', `address/${addid}`)
+
+      })
+    })
+  })
+
+
   const removeAddress = async (_id) => {
     await axios.delete('', { data: { _id } }).then(e => {
       window.location.reload();

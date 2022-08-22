@@ -10,6 +10,7 @@ const Coupon = require('../model/products/couponModel');
 const addressModel = require('../model/users/adressModel');
 const { set } = require("mongoose");
 const ProductModel = require("../model/products/ProductModel");
+const { findOneAndUpdate } = require("../model/products/SubCategory");
 
 
 const findtotal = (user) => {
@@ -167,23 +168,45 @@ exports.getAddress = async (req, res) => {
 
 exports.postAddress = async (req, res) => {
   const user = await addressModel.find({ userid: req.params.id })
-  console.log(user)
+
   if (user.length === 0) {
     console.log(req.body)
     const newAddress = await new addressModel({ userid: req.params.id, address: req.body })
     await Usersmodel.findByIdAndUpdate(req.params.id, { $push: { address: newAddress._id } })
     newAddress.save()
     console.log(newAddress)
-    res.status(200)
+    res.redirect(`/users/${req.params.id}/address`)
     // res.json({ message: "address added successfully " })
   } else {
     console.log(req.body)
     const newAddress = await addressModel.update({ userid: req.params.id }, { $push: { address: req.body } })
     console.log(newAddress)
-    res.status(200)
+    res.redirect(`/users/${req.params.id}/address`)
     // res.json({ message: "address updated successfully" })
   }
 
+}
+
+
+
+exports.getAAddress = async (req, res) => {
+  try {
+    const addresss = await addressModel.findOne({ 'address._id': req.params.addid })
+    const address = addresss.address.filter(e => e._id == req.params.addid)
+    res.json({ address })
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+exports.editAddress = async (req, res) => {
+  try {
+    const newAddress = await addressModel.updateOne({ 'address._id': req.params.addid }, { '$set': { 'address.$': req.body } })
+    res.redirect(`/users/${req.params.id}/address`)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 exports.deleteAddress = async (req, res) => {
@@ -316,24 +339,21 @@ exports.getAllOrder = async (req, res) => {
   const orders = await Order.find({ userid: req.params.id }).populate({ path: 'order', populate: { path: 'product' } })
 
 
-  res.render('user/order', { orders, user })
+  res.render('user/profile/order', { layout: 'userProfileLayout', orders, user })
 
 }
 
 exports.getAOrder = async (req, res) => {
   try {
-    console.log(req.params.orderid)
+    const user = await Usersmodel.findById(req.params.id)
     const order = await Order.findById(req.params.orderid).populate({ path: 'order', populate: { path: 'product' } })
-
     const total = order.order.reduce((acc, curr) => {
       return acc + curr.total
     }, 0)
-    console.log(total)
-
-    res.render('user/orderDetails', { order, total })
+    res.render('user/profile/orderDetails', { layout: 'userProfileLayout', order, total, user })
   } catch (error) {
 
-
+    console.log(error)
   }
 }
 

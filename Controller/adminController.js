@@ -245,15 +245,7 @@ exports.deleteCoupon = async (req, res) => {
 exports.getdata = async (req, res) => {
   const orders = await OrderModel.find()
   const totalOrders = orders.length
-  const sales = await orders.reduce((acc, crr) => {
-    if (crr.paid) {
-
-      acc++
-    }
-    return acc
-  }, 0);
 
 
-
-  console.log(sales)
+  res.json({ orders })
 }

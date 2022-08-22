@@ -1,33 +1,31 @@
 <div class="main--content ">
     <div class="recent--patients table-content">
         <div class="title">
-            <h2 class="section--title">Shipping Address</h2>
+            <h2 class="section--title">All Orders</h2>
         </div>
         <div class="table">
             <table>
                 <thead>
                     <tr>
-                        <th>Adrress</th>
-                        <th>State</th>
-                        <th>City</th>
-                        <th>Pin</th>
-                        <th>Settings</th>
+                        <th>Order Id</th>
+                        <th>Total Bill</th>
+                        <th>Status</th>
+                        <th>Discount</th>
+                        <th>Payment</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each address}}
-                    {{#each this.address}}
+                    {{#each orders}}
+
 
                     <tr>
-                        <td>{{this.address}}</td>
-                        <td>{{this.state}}</td>
-                        <td>{{this.city}}</td>
-                        <td>{{this.pin}}</td>
-                        <td><span><a data-toggle="modal" data-target="#editmodal"><i class="ri-edit-line edit"
-                                        addressid="{{this._id}}"></i></a><i
-                                    class="ri-delete-bin-line delete"></i></span></td>
+                        <td><a href="orders/{{this._id}}">{{this._id}}</a></td>
+                        <td>{{this.totalBill}}</td>
+                        <td>{{this.status}}</td>
+                        <td>{{this.discount}}</td>
+                        <td>{{this.paymentType}}</td>
                     </tr>
-                    {{/each}}
+
                     {{/each}}
                 </tbody>
             </table>

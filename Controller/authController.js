@@ -98,7 +98,7 @@ exports.postSignin = async (req, res) => {
                             res.cookie('jwt', token, {
                                 // expires: new Date(Date.now() + 10 * 1000),  
                                 httpOnly: true
-                            }).redirect(`/admin`);
+                            }).redirect(`/admin/home`);
                         } else {
                             res.cookie('jwt', token, {
                                 // expires: new Date(Date.now() + 1000 * 10000),
