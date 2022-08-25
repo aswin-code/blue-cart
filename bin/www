@@ -12,7 +12,7 @@ dotenv.config();
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://127.0.0.1:27017/blue-cart').then((con) => {
-  console.log('sucessfully connected to db');
+
 })
 
 
@@ -37,7 +37,7 @@ let server = http.createServer(app);
  */
 
 server.listen(port, () => {
-  console.log('server started on port : ' + port);
+
 });
 server.on('error', onError);
 server.on('listening', onListening);

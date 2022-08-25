@@ -40,7 +40,7 @@ exports.getProducts = async (req, res) => {
 
     const user = await Usersmodel.findById(req.params.userid);
     const product = await Product.findById(req.params.id);
-    console.log(req.body)
+
     if (req.body.quick) return res.json({ product, user });
     res.render('user/productdetail', { user, product })
 
@@ -55,7 +55,7 @@ exports.getoverview = async (req, res) => {
 
     const user = await Usersmodel.findById(req.params.userid);
     const product = await Product.findById(req.params.id);
-    console.log(req.body)
+
     res.json({ product, user });
 
   } catch (error) {
@@ -73,7 +73,7 @@ exports.getCart = async (req, res) => {
     res.json({ user, total });
 
   } catch (error) {
-    console.log(error);
+
   }
 
 }
@@ -85,7 +85,7 @@ exports.getCartpage = async (req, res) => {
     res.render('user/cart', { user, total });
 
   } catch (error) {
-    console.log(error);
+
   }
 
 }
@@ -109,12 +109,13 @@ exports.postCart = async (req, res) => {
     }
 
   } catch (error) {
-    console.log(error);
+
   }
 }
 
 exports.patchCart = async (req, res) => {
   try {
+    console.log(req.body.qty);
     const cart = await Cart.findByIdAndUpdate(req.body.cartid, { $inc: { qty: req.body.qty, total: req.body.price } }, { new: true }).populate('product').populate('userid')
     const user = await Usersmodel.findById(req.params.id).populate('cart')
     let total = findtotal(user);
@@ -127,7 +128,7 @@ exports.patchCart = async (req, res) => {
     }
 
   } catch (error) {
-    console.log(error);
+
   }
 }
 /////////////////////////////////////////////////////////
@@ -138,19 +139,19 @@ exports.getProfilePage = async (req, res) => {
   const orders = await Order.find({ userid: req.params.id }).lean()
   const user = await Usersmodel.findById(req.params.id).populate('address').lean()
 
-  console.log(orders)
+
   res.render('user/profile/userProfile', { layout: 'userProfileLayout', user, orders })
 
 }
 
 exports.patchUserProfile = async (req, res) => {
   try {
-    console.log(req.body)
+
     const newUser = await Usersmodel.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
-    console.log(newUser)
+
     res.json({ message: "profile updated successfully" })
   } catch (error) {
-    console.log(error)
+
   }
 }
 
@@ -161,7 +162,7 @@ exports.getAddress = async (req, res) => {
   const user = await Usersmodel.findById(req.params.id)
 
   const address = await addressModel.find({ userid: req.params.id }).populate('address')
-  console.log(address)
+
   res.render('user/addresspage', { layout: 'userProfileLayout', user, address })
 
 }
@@ -170,17 +171,17 @@ exports.postAddress = async (req, res) => {
   const user = await addressModel.find({ userid: req.params.id })
 
   if (user.length === 0) {
-    console.log(req.body)
+
     const newAddress = await new addressModel({ userid: req.params.id, address: req.body })
     await Usersmodel.findByIdAndUpdate(req.params.id, { $push: { address: newAddress._id } })
     newAddress.save()
-    console.log(newAddress)
+
     res.redirect(`/users/${req.params.id}/address`)
     // res.json({ message: "address added successfully " })
   } else {
-    console.log(req.body)
+
     const newAddress = await addressModel.update({ userid: req.params.id }, { $push: { address: req.body } })
-    console.log(newAddress)
+
     res.redirect(`/users/${req.params.id}/address`)
     // res.json({ message: "address updated successfully" })
   }
@@ -196,7 +197,7 @@ exports.getAAddress = async (req, res) => {
     res.json({ address })
 
   } catch (error) {
-    console.log(error)
+
   }
 }
 
@@ -205,18 +206,18 @@ exports.editAddress = async (req, res) => {
     const newAddress = await addressModel.updateOne({ 'address._id': req.params.addid }, { '$set': { 'address.$': req.body } })
     res.redirect(`/users/${req.params.id}/address`)
   } catch (error) {
-    console.log(error)
+
   }
 }
 
 exports.deleteAddress = async (req, res) => {
   try {
-    console.log("request", req.body, req.params.id)
+
     const address = await addressModel.updateOne({ userid: req.params.id }, { $pull: { address: { _id: req.body._id } } })
-    console.log(address)
+
     res.json({ message: "failed" })
   } catch (err) {
-    console.log(err)
+
   }
 }
 
@@ -275,7 +276,7 @@ exports.postCheckOut = async (req, res) => {
 
 
   } catch (error) {
-    console.log(error)
+
   }
 }
 
@@ -322,7 +323,7 @@ exports.cashOnDelivery = async (req, res) => {
 
 
   } catch (error) {
-    console.log(error)
+
   }
 }
 
@@ -353,7 +354,6 @@ exports.getAOrder = async (req, res) => {
     res.render('user/profile/orderDetails', { layout: 'userProfileLayout', order, total, user })
   } catch (error) {
 
-    console.log(error)
   }
 }
 

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const verifytoken = (req, res, next) => {
-    // console.log(req.headers);
+
     const authHeader = req.headers.cookie;
     if (authHeader) {
         const token = authHeader.split('=')[1];
@@ -10,7 +10,7 @@ const verifytoken = (req, res, next) => {
                 if (err) {
                     res.redirect('/signin');
                 } else {
-                    console.log(client);
+
                     req.user = client;
                     next();
                 }
@@ -26,7 +26,7 @@ const verifytoken = (req, res, next) => {
 
 const verifytokenAndAuthorization = (req, res, next) => {
     verifytoken(req, res, () => {
-        console.log(req.user);
+
         if (req.user.id === req.params.id || req.user.isAdmin) {
             next();
         } else {

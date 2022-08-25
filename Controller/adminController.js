@@ -25,7 +25,7 @@ exports.editCategory = async (req, res) => {
     await Category.findByIdAndUpdate(req.params.id, { $set: req.body })
     res.json({ message: 'categor edited successfully' })
   } catch (err) {
-    console.log(err)
+
   }
 }
 
@@ -109,14 +109,14 @@ exports.getAProduct = async (req, res) => {
     const category = await Category.find().lean();
     const product = await Product.findById(req.params.id);
     const subcategory = await SubCategory.findById(product.subCategory).populate("categoryName").lean();
-    console.log(subcategory);
+
     res.render("admin/editproduct", {
       layout: 'adminlayout',
       product,
       category,
     });
   } catch (error) {
-    console.log(error);
+
   }
 };
 
@@ -124,12 +124,12 @@ exports.editProduct = async (req, res) => {
   try {
     const category = await Category.find().lean();
     const subcategory = await SubCategory.findOne({ name: req.body.SubCategory })
-    console.log(subcategory);
+
     const product = await ProductModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    console.log(product);
+
     res.redirect('/admin/products')
   } catch (error) {
-    console.log(error)
+
   }
 }
 
@@ -140,7 +140,7 @@ exports.deleteProduct = async (req, res) => {
     res.json({ message: "product deleted", url: '/admin/products' })
 
   } catch (error) {
-    console.log(error)
+
 
   }
 }
@@ -171,7 +171,7 @@ exports.BlockUnbolck = async (req, res) => {
     await User.findByIdAndUpdate(req.body.userid, { $set: { isActive: true } })
     res.json({ message: "User have been unblocked" })
   } catch (error) {
-    console.log(error);
+
   }
 }
 
@@ -194,7 +194,7 @@ exports.getAllorders = async (req, res) => {
 exports.getAOrder = async (req, res) => {
   try {
     const order = await OrderModel.findById(req.params.id).populate({ path: 'order', populate: { path: 'product' } })
-    console.log(order)
+
     res.render('admin/orderDetail', { layout: "adminlayout", order })
   } catch (error) {
 
@@ -204,10 +204,10 @@ exports.getAOrder = async (req, res) => {
 exports.UpdateStatus = async (req, res) => {
   try {
     const order = await OrderModel.findByIdAndUpdate(req.params.id, { $set: { status: req.body.status } })
-    console.log(order)
+
     res.json({ message: "order updated successfully" })
   } catch (error) {
-    console.log(error)
+
 
   }
 }
@@ -220,22 +220,22 @@ exports.UpdateStatus = async (req, res) => {
 exports.createCoupon = async (req, res) => {
   try {
     const newCoupon = await new CouponModel(req.body)
-    console.log(newCoupon);
+
     newCoupon.save()
     res.redirect('/admin/products');
   } catch (err) {
-    console.log(err)
+
   }
 }
 
 exports.deleteCoupon = async (req, res) => {
   try {
-    console.log(req.body)
+
     await CouponModel.findByIdAndDelete(req.body.couponid).then(
       res.json({ message: 'Coupon deleted successfully' })
     )
   } catch (error) {
-    console.log(error)
+
   }
 }
 

@@ -40,7 +40,7 @@ $(document).ready(function () {
     })
 
     $('#submit').click(function () {
-        console.log(document.getElementById('address').value)
+
         axios.post('', {
             state: document.getElementById('state').value,
             landMark: document.getElementById('landmark').value,
@@ -50,7 +50,7 @@ $(document).ready(function () {
 
 
         }).then(e => {
-            console.log(e)
+
             window.location.reload()
         })
 

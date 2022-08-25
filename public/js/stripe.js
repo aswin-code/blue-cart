@@ -2,7 +2,7 @@ const stripe = Stripe('pk_test_51LVugISGF4nE7vqYqF4H2aV4gVKFmT3aIrATGwqMCw39fmQG
 
 const pay = async orderId => {
     try {
-        console.log('worked')
+
         const session = await axios.get(`http://localhost:4000${orderId}`)
         await stripe.redirectToCheckout({
             sessionId: session.data.session.id

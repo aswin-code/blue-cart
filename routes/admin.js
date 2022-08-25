@@ -32,7 +32,7 @@ router
 router
   .route("/categorys/:id")
   .get(verifytokenAndAuthorization, async (req, res) => {
-    console.log(req.params.id);
+
     const category = await Category.findById(req.params.id);
     res.json({
       category,

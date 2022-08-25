@@ -134,7 +134,7 @@
                     password
                 }
             })
-            console.log(res.data)
+
             if (res.data.status == "failed") {
                 document.getElementById('check').innerText = res.data.data.message
             } else if (res.data.status == "blocked") {
@@ -145,14 +145,14 @@
             }
         }
         catch (err) {
-            console.log(err.response)
+
 
         }
 
 
     }
     document.querySelector('#form').addEventListener('submit', e => {
-        console.log("worked")
+
         e.preventDefault();
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;

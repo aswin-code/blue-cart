@@ -9,7 +9,7 @@ exports.getCheckoutSession = async (req, res, next) => {
 
         // 1)Get current order
         const order = await OrderModel.findById(req.params.id)
-        console.log(order)
+
 
         const url = `http://localhost:4000/users/${order.userid}`
 
@@ -26,7 +26,7 @@ exports.getCheckoutSession = async (req, res, next) => {
                         name: 'T-shirt',
                     },
 
-                    unit_amount: order.totalBill + 50 * 100,
+                    unit_amount: (50 + order.totalBill * 1) * 100,
                 },
                 quantity: 1,
             }],
@@ -36,12 +36,12 @@ exports.getCheckoutSession = async (req, res, next) => {
         });
 
         res.json({ session })
-        console.log(session)
+
 
         // 3)Create session as response
 
     } catch (error) {
-        console.log(error)
+
     }
 
 }
@@ -58,7 +58,7 @@ exports.successfullPaymenet = async (req, res, next) => {
 
         res.redirect(`/users/${userid}`)
     } catch (err) {
-        console.log(err)
+
     }
 
 }

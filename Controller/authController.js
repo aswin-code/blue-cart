@@ -22,14 +22,7 @@ exports.postSignup = async (req, res) => {
             gender,
             country,
             password
-        } = req.body
-        console.log(fname,
-            lname,
-            email,
-            city,
-            gender,
-            country,
-            password);
+        } = req.body;
         const newUser = await new User(req.body);
         await newUser.save();
         res.redirect('/signin');
@@ -75,7 +68,7 @@ exports.postSignin = async (req, res) => {
             email,
             password
         } = req.body;
-        console.log(password);
+
         const user = await User.findOne({
             email
         });
@@ -88,7 +81,7 @@ exports.postSignin = async (req, res) => {
 
             if (user) {
                 bcrypt.compare(password, user.password).then(data => {
-                    console.log(data);
+
                     if (data) {
                         const token = jwt.sign({
                             id: user._id,
@@ -129,7 +122,7 @@ exports.postSignin = async (req, res) => {
 
 
     } catch (err) {
-        console.log(err);
+
 
     }
 

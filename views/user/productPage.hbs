@@ -908,12 +908,12 @@
             const userid = $(this).attr('userid')
             const qty = document.getElementById('num-product').value
             const productid = $(this).attr('productid')
-            console.log(productid)
+
             axios.post(`/users/${userid}/carts`, {
                 productid,
                 qty
             }).then(e => {
-                console.log(e.data)
+
                 $('.icon-header-noti').attr('data-notify', `${e.data.user.cart.length}`)
                 swal(nameProduct, "is added to cart !", "success");
             })
