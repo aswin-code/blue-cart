@@ -10,13 +10,12 @@ let http = require('http');
 const dotenv = require('dotenv');
 dotenv.config();
 const mongoose = require('mongoose');
-
-mongoose.connect('mongodb://127.0.0.1:27017/blue-cart').then((con) => {
-
-})
-
-
-
+const conn = process.env.DB_CONN.replace("<password>", process.env.DB_PASS)
+mongoose.connect(conn).then((con) => {
+  console.log("db connect")
+}).catch(e => [
+  console.log("db not connencted")
+])
 
 
 /**
