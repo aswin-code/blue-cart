@@ -87,12 +87,12 @@ exports.postSignin = async (req, res) => {
                         }, process.env.JWT_SECRTKEY);
                         if (user.isAdmin) {
                             res.cookie('jwt', token, {
-                                expires: new Date(Date.now() + 10 * 10000),
+                                expires: new Date(Date.now() + 10 * 100000),
                                 httpOnly: true
                             }).json({ url: `/admin/home` });
                         } else {
                             res.cookie('jwt', token, {
-                                expires: new Date(Date.now() + 10 * 10000),
+                                expires: new Date(Date.now() + 10 * 100000),
                                 httpOnly: true
                             }).json({ url: `/users/${user._id}` });
                         }
