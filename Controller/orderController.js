@@ -3,55 +3,39 @@ const stripe = require('stripe')('sk_test_51LVugISGF4nE7vqYEuRZ6XYr2tBxs2KM4EkgL
 const OrderModel = require('../model/users/OrderModel');
 const Usersmodel = require("../model/users/UserModel");
 const Cart = require("../model/users/CartModel");
-const mongoose = require('mongoose')
 
 exports.getCheckoutSession = async (req, res, next) => {
     try {
-        console.log(req.params.id)
 
-        async function ordercall(next) {
-            const order = await OrderModel.findOne({ _id: req.params.id })
-            next(order)
-        }
-        async function next(order) {
-            const url = `http://localhost:4000/users/${order.userid}`
+        // 1)Get current order
+        const order = await OrderModel.findById(req.params.id)
+        console.log(order)
 
-            // 2) create  checkout session
-            const session = await stripe.checkout.sessions.create({
-                // Remove the payment_method_types parameter
-                // to manage payment methods in the Dashboard
-                payment_method_types: ['card'],
-                line_items: [{
-                    price_data: {
+        const url = `http://localhost:4000/users/${order.userid}`
 
-                        currency: 'inr',
-                        product_data: {
-                            name: 'T-shirt',
-                        },
+        // 2) create  checkout session
+        const session = await stripe.checkout.sessions.create({
+            // Remove the payment_method_types parameter
+            // to manage payment methods in the Dashboard
+            payment_method_types: ['card'],
+            line_items: [{
+                price_data: {
 
-                        unit_amount: (50 + order.totalBill * 1) * 100,
+                    currency: 'inr',
+                    product_data: {
+                        name: 'T-shirt',
                     },
-                    quantity: 1,
-                }],
-                mode: 'payment',
-                success_url: `${url}?orderid=${order._id}&paid=true&userid=${order.userid}`,
-                cancel_url: url,
-            });
 
+                    unit_amount: (50 + order.totalBill * 1) * 100,
+                },
+                quantity: 1,
+            }],
+            mode: 'payment',
+            success_url: `${url}?orderid=${order._id}&paid=true&userid=${order.userid}`,
+            cancel_url: url,
+        });
 
-            res.json({ session })
-
-        }
-        ordercall(next)
-
-        // const order = await OrderModel.findOne({ _id: req.params.id }, (err, order) => {
-
-        //     console.log(err)
-        //     console.log(order)
-
-        // })
-
-
+        res.json({ session })
 
 
         // 3)Create session as response
