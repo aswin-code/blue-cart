@@ -272,7 +272,7 @@ exports.postCheckOut = async (req, res) => {
     const newOrder = await new Order({ userid: req.params.id, order: cart, shippingAddress: { address, state, city, pin }, totalBill, discount: total - totalBill })
 
     newOrder.save()
-    res.json({ status: 201, url: `/order/checkout-session/${newOrder._id}` })
+    res.json({ url: `/order/checkout-session/${newOrder._id}` })
 
 
   } catch (error) {
