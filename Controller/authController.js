@@ -22,7 +22,7 @@ exports.postSignup = async (req, res) => {
             id: newUser._id,
             isAdmin: newUser.isAdmin
         }, process.env.JWT_SECRTKEY);
-        res.cookie('jwt', token, { httpOnly: true }).json({ url: `/users/${newUser._id}` })
+        res.cookie('jwt', token, { httpOnly: true, expires: new Date(Date.now() + 10 * 1000) }).json({ url: `/users/${newUser._id}` })
 
     } catch (error) {
 
@@ -87,12 +87,12 @@ exports.postSignin = async (req, res) => {
                         }, process.env.JWT_SECRTKEY);
                         if (user.isAdmin) {
                             res.cookie('jwt', token, {
-                                // expires: new Date(Date.now() + 10 * 1000),  
+                                expires: new Date(Date.now() + 10 * 1000),
                                 httpOnly: true
                             }).json({ url: `/admin/home` });
                         } else {
                             res.cookie('jwt', token, {
-                                // expires: new Date(Date.now() + 1000 * 10000),
+                                expires: new Date(Date.now() + 1000 * 10000),
                                 httpOnly: true
                             }).json({ url: `/users/${user._id}` });
                         }
