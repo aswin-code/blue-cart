@@ -7,7 +7,7 @@ const verifytokenAndAuthorization = require('../routes/verifytoken');
 
 exports.getSignup = (req, res) => {
 
-    res.render('signup');
+    res.render('signup', { layout: 'signinSignupLayout' });
 }
 
 
@@ -55,7 +55,7 @@ exports.checkLog = (req, res, next) => {
 
 
 exports.getSignin = (req, res) => {
-    res.render('signin');
+    res.render('signin', { layout: 'signinSignupLayout' });
 }
 
 

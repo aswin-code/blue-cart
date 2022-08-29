@@ -20,6 +20,7 @@
 
                                     <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account
                                     </h5>
+                                    <p class="invaild"></p>
                                     <h5 class="fw-normal mb-3 pb-3 invalid" style="letter-spacing: 1px;"></h5>
 
                                     <div class="form-outline mb-4">
@@ -53,40 +54,3 @@
         </div>
     </div>
 </section>
-<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
-<script>
-    $(document).ready(function () {
-
-        $('.login').on('click', async function () {
-            let Check = true
-            const email = $('.email').val()
-            const password = $('.password').val()
-            $(".error").remove();
-            if (email.length < 1) {
-                Check = false
-                $('#email').after('<span class="error" style="color:red;">This field is required</span> ')
-
-            } else {
-                var regEx = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
-                var validEmail = regEx.test(email);
-
-            }
-            if (password.length < 1) {
-                Check = false
-                $('#password').after('<span class="error" style="color:red;"> This field is required</span>')
-            }
-            if (Check) {
-                await axios.post('', {
-                    email, password
-                }).then(e => {
-                    if (e.data.status) {
-                        $('.invalid').text(e.data.message).addClass('text-danger')
-                    } else {
-                        window.location.assign(e.data.url)
-                    }
-                })
-            }
-        })
-    })
-
-</script>

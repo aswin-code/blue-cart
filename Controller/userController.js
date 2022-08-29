@@ -245,14 +245,14 @@ exports.postCheckOut = async (req, res) => {
 
 
     let totalBill = 0
-    const cart = user.cart.reduce((acc, curr) => {
+    const cart = await user.cart.reduce((acc, curr) => {
       return acc.concat([
         {
           product: curr.product._id, qty: curr.qty, total: curr.total
         }
       ]);
     }, [])
-    const total = cart.reduce((acc, curr) => {
+    const total = await cart.reduce((acc, curr) => {
       return acc + curr.total
     }, 0)
     if (coupon) {
@@ -262,7 +262,7 @@ exports.postCheckOut = async (req, res) => {
     }
 
 
-    const { address, state, city, pin } = user.address.address.find((e) => {
+    const { address, state, city, pin } = await user.address.address.find((e) => {
       if (e._id == req.body.addressid) {
         return true;
       }

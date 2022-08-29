@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CozaStore</title>
+    <link rel="icon" type="image/png" href="/images/icons/favicon.png" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    {{{body}}}
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('.login').on('click', async function () {
+            let Check = true
+            const email = $('.email').val()
+            const password = $('.password').val()
+            $(".error").remove();
+            if (email.length < 1) {
+                Check = false
+                $('#email').after('<span class="error" style="color:red;">This field is required</span> ')
+
+            } else {
+                var regEx = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
+                var validEmail = regEx.test(email);
+
+            }
+            if (password.length < 1) {
+                Check = false
+                $('#password').after('<span class="error" style="color:red;"> This field is required</span>')
+            }
+            if (Check) {
+                await axios.post('', {
+                    email, password
+                }).then(e => {
+                    console.log(e.data)
+                    if (e.data.status) {
+                        $('.invalid').text(e.data.message).addClass('text-danger')
+                    } else {
+                        window.location.assign(e.data.url)
+                    }
+                })
+            }
+        })
+    })
+
+</script>
+
+</html>
