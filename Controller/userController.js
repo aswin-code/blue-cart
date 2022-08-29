@@ -21,7 +21,7 @@ const findtotal = (user) => {
 
 exports.getUserPage = async (req, res, next) => {
   const category = await Category.find()
-  const products = await Product.find().populate({ path: 'subCategory', populate: { path: 'categoryName' } })
+  const products = await Product.find().populate('category')
   const user = await Usersmodel.findById(req.params.id).populate({ path: 'cart', populate: { path: 'product' } })
   res.render("user/store", { products, user, category });
 }
@@ -30,7 +30,7 @@ exports.getUserPage = async (req, res, next) => {
 
 exports.getAllProducts = async (req, res) => {
   const user = await Usersmodel.findById(req.params.userid);
-  const product = await Product.find();
+  const product = await Product.find().populate('category');
   res.render('user/productPage', { user, product })
 }
 

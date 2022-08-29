@@ -17,7 +17,7 @@
                 <tbody>
                     {{#each users}}
                     <tr>
-                        <td>{{this.fname}}</td>
+                        <td>{{this.name}}</td>
                         <td>{{this.email}}</td>
                         {{#if this.isActive}}
                         <td class="confirmed">Active</td>
@@ -45,8 +45,8 @@
 
 
 <script>
-    const BB = function (userid) {
-        axios.post('', {
+    const BB = async function (userid) {
+        await axios.post('', {
             userid
         }).then(e => {
             window.location.reload()
@@ -54,13 +54,46 @@
     }
     $('.block').click(function () {
         const userid = $(this).attr('user-id')
-        confirm('Do you want to Block this user')
-        BB(userid)
+        swal({
+            title: "Are you sure?",
+            text: "Do you want to block this user!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal(" User blocked successfully !", {
+                        icon: "success",
+                    });
+                    BB(userid)
+                } else {
+                    swal("Ok!");
+                }
+            });
+
 
     })
     $('.unblock').click(function () {
         const userid = $(this).attr('user-id')
-        confirm('Do you want to Unblock this user')
-        BB(userid)
+
+        swal({
+            title: "Are you sure?",
+            text: "'Do you want to Unblock this user!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("User, Unblocked successfully!", {
+                        icon: "success",
+                    });
+                    BB(userid)
+                } else {
+                    swal("ok!");
+                }
+            });
+
     })
 </script>

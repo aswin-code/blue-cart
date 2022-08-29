@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
+    {{!--
+    <link rel="stylesheet" href="/css/styles.css"> --}}
     <link rel="stylesheet" href="/css/admincss.css">
     <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -23,6 +24,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 
     <title>Dashboard</title>
@@ -38,58 +41,45 @@
                 <img src="/images/icons/logo-01.png" class="img-fluid w-10"
                     style="top: 2%;left: 6%;width: 8%; /* height: 100%; */ object-fit: cover;" alt="IMG-LOGO"> </a>
         </div>
-        <div class="search--notification--profile">
-            <div class="search">
-                <input type="text" placeholder="Search Scdule..">
-                <button><i class="ri-search-2-line"></i></button>
-            </div>
-            <div class="notification--profile">
-                <div class="picon lock">
-                    <i class="ri-lock-line"></i>
-                </div>
-                <div class="picon bell">
-                    <i class="ri-notification-2-line"></i>
-                </div>
-                <div class="picon chat">
-                    <i class="ri-wechat-2-line"></i>
-                </div>
-                <div class="picon profile">
-                    <img src="/images/profile.jpg" alt="">
-                </div>
-            </div>
-        </div>
+
     </section>
     <section class="main mr-2">
         <div class="sidebar ">
             <ul class="sidebar--items">
                 <li>
-                    <a href="/admin/home" id="active--link" class="Dashboard">
+                    <a href="/admin/home" id="home">
                         <span class="icon icon-1"><i class="ri-layout-grid-line"></i></span>
                         <span class="sidebar--item">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a class="users" href="/admin/users">
+                    <a class="users" href="/admin/users" id="users">
                         <span class="icon icon-2 "><i class="ri-calendar-2-line"></i></span>
                         <span class="sidebar--item">Users</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/products">
+                    <a href="/admin/products" id="products">
                         <span class="icon icon-3"><i class="ri-user-2-line"></i></span>
                         <span class="sidebar--item" style="white-space: nowrap;">Products</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/categorys">
+                    <a href="/admin/categorys" id="categorys">
                         <span class="icon icon-4"><i class="ri-user-line"></i></span>
                         <span class="sidebar--item">Category</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/orders">
+                    <a href="/admin/orders" id="orders">
                         <span class="icon icon-4"><i class="ri-user-line"></i></span>
                         <span class="sidebar--item">Orders</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/coupons" id="coupons">
+                        <span class="icon icon-4"><i class="ri-user-line"></i></span>
+                        <span class="sidebar--item">Coupons</span>
                     </a>
                 </li>
 
@@ -102,7 +92,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/logout">
+                    <a href="/logout">
                         <span class="icon icon-8"><i class="ri-logout-box-r-line"></i></span>
                         <span class="sidebar--item">Logout</span>
                     </a>
@@ -111,7 +101,14 @@
         </div>
         {{{body}}}
     </section>
-    <script>let menu = document.querySelector('.menu')
+    <script>
+        $(document).ready(function () {
+            const value = window.location.href.split('/')[window.location.href.split('/').length - 1]
+
+            $(`#${value}`).attr('id', "active--link")
+
+        })
+        let menu = document.querySelector('.menu')
         let sidebar = document.querySelector('.sidebar')
         let mainContent = document.querySelector('.main--content')
 

@@ -14,18 +14,16 @@ exports.getSignup = (req, res) => {
 
 exports.postSignup = async (req, res) => {
     try {
-        const {
-            fname,
-            lname,
-            email,
-            city,
-            gender,
-            country,
-            password
-        } = req.body;
+        const oldUser = await User.findOne({ email: req.body.email })
+        if (oldUser) return res.json({ status: "failed" });
         const newUser = await new User(req.body);
         await newUser.save();
-        res.redirect('/signin');
+        const token = jwt.sign({
+            id: newUser._id,
+            isAdmin: newUser.isAdmin
+        }, process.env.JWT_SECRTKEY);
+        res.cookie('jwt', token, { httpOnly: true }).json({ url: `/users/${newUser._id}` })
+
     } catch (error) {
 
     }
@@ -91,12 +89,12 @@ exports.postSignin = async (req, res) => {
                             res.cookie('jwt', token, {
                                 // expires: new Date(Date.now() + 10 * 1000),  
                                 httpOnly: true
-                            }).redirect(`/admin/home`);
+                            }).json({ url: `/admin/home` });
                         } else {
                             res.cookie('jwt', token, {
                                 // expires: new Date(Date.now() + 1000 * 10000),
                                 httpOnly: true
-                            }).redirect(`/users/${user._id}`);
+                            }).json({ url: `/users/${user._id}` });
                         }
                     } else {
                         res.json({

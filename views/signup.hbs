@@ -1,232 +1,143 @@
-<header class="section-header">
-	<nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
-		<div class="container">
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4"
-				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarTop4">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> Language </a>
-						<ul class="dropdown-menu small">
-							<li><a class="dropdown-item" href="#">English</a></li>
-							<li><a class="dropdown-item" href="#">Arabic</a></li>
-							<li><a class="dropdown-item" href="#">Russian </a></li>
-						</ul>
-					</li>
-					<li class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> USD </a>
-						<ul class="dropdown-menu small">
-							<li><a class="dropdown-item" href="#">EUR</a></li>
-							<li><a class="dropdown-item" href="#">AED</a></li>
-							<li><a class="dropdown-item" href="#">RUBL </a></li>
-						</ul>
-					</li>
-				</ul>
-				<ul class="navbar-nav">
-					<li><a href="#" class="nav-link"> <i class="fa fa-envelope"></i> Email </a></li>
-					<li><a href="#" class="nav-link"> <i class="fa fa-phone"></i> Call us </a></li>
-				</ul> <!-- list-inline //  -->
-			</div> <!-- navbar-collapse .// -->
-		</div> <!-- container //  -->
-	</nav>
+<style>
+	.gradient-custom-3 {
+		/* fallback for old browsers */
+		background: #84fab0;
 
-	<section class="header-main border-bottom">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-2 col-md-3 col-6">
-					<a href="/" class="brand-wrap">
-						<img class="logo" src="/images/logo.png">
-					</a> <!-- brand-wrap.// -->
-				</div>
-				<a href="/" class="btn btn-outline-primary">Store</a>
-				<div class="col-lg  col-md-6 col-sm-12 col">
-					<form action="#" class="search">
-						<div class="input-group w-100">
-							<input type="text" class="form-control" style="width:60%;" placeholder="S name=""earch">
+		/* Chrome 10-25, Safari 5.1-6 */
+		background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
 
-							<div class="input-group-append">
-								<button class="btn btn-primary" type="submit">
-									<i class="fa fa-search"></i>
-								</button>
-							</div>
-						</div>
-					</form> <!-- search-wrap .end// -->
-				</div> <!-- col.// -->
-				<div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
-					<div class="d-flex justify-content-end mb-3 mb-lg-0">
-						<div class="widget-header">
-							<small class="title text-muted">Welcome guest!</small>
-							<div>
-
-								<a href="signin">Sign in</a> <span class="dark-transp"> | </span>
-								<a href="signup"> Register</a>
-							</div>
-						</div>
-						<a href="./cart.html" class="widget-header pl-3 ml-3">
-							<div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
-							<span class="badge badge-pill badge-danger notify">0</span>
-						</a>
-					</div> <!-- widgets-wrap.// -->
-				</div> <!-- col.// -->
-			</div> <!-- row.// -->
-		</div> <!-- container.// -->
-	</section> <!-- header-main .// -->
-
-
-
-</header> <!-- section-header.// -->
-
-
-
-<!-- ========================= SECTION CONTENT ========================= -->
-<section class="section-content padding-y">
-
-	<!-- ============================ COMPONENT REGISTER   ================================= -->
-	<div class="card mx-auto" style="max-width:520px; margin-top:40px;">
-		<article class="card-body">
-			<header class="mb-4">
-				<h4 class="card-title">Sign up</h4>
-				<p id="invalid" style="color:red;"></p>
-			</header>
-			{{#if message}}
-			<p>user already exist</p>
-			{{/if}}
-			<form id="form">
-				<div class="form-row">
-					<div class="col form-group">
-						<label>First name</label>
-						<input type="text" class="form-control" placeholder="" id="fname">
-					</div> <!-- form-group end.// -->
-					<div class="col form-group">
-						<label>Last name</label>
-						<input type="text" class="form-control" placeholder="" id="lname">
-					</div> <!-- form-group end.// -->
-				</div> <!-- form-row end.// -->
-				<div class="form-group">
-					<label>Email</label>
-					<input type="email" class="form-control" placeholder="" id="email">
-					<small class="form-text text-muted">We'll never share your email with anyone else.</small>
-				</div> <!-- form-group end.// -->
-				<div class="form-group">
-					<label class="custom-control custom-radio custom-control-inline">
-						<input class="custom-control-input" checked="" type="radio" value="male" name="gender">
-						<span class="custom-control-label"> Male </span>
-					</label>
-					<label class="custom-control custom-radio custom-control-inline">
-						<input class="custom-control-input" type="radio" value="female" name="gender">
-						<span class="custom-control-label"> Female </span>
-					</label>
-				</div> <!-- form-group end.// -->
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<label>City</label>
-						<input type="text" class="form-control" id="city">
-					</div> <!-- form-group end.// -->
-					<div class="form-group col-md-6">
-						<label>Country</label>
-						<select id="inputState" class="form-control" name="country">
-							<option> Choose...</option>
-							<option>Uzbekistan</option>
-							<option>Russia</option>
-							<option selected="">United States</option>
-							<option>India</option>
-							<option>Afganistan</option>
-						</select>
-					</div> <!-- form-group end.// -->
-				</div> <!-- form-row.// -->
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<label>Create password</label>
-						<input class="form-control" type="password">
-					</div> <!-- form-group end.// -->
-					<div class="form-group col-md-6">
-						<label>Repeat password</label>
-						<input class="form-control" type="password" id="password">
-					</div> <!-- form-group end.// -->
-				</div>
-				<div class="form-group">
-					<button type="submit" class="btn btn-primary btn-block"> Register </button>
-				</div> <!-- form-group// -->
-
-			</form>
-		</article><!-- card-body.// -->
-	</div> <!-- card .// -->
-	<p class="text-center mt-4">Have an account? <a href="">Log In</a></p>
-	<br><br>
-	<!-- ============================ COMPONENT REGISTER  END.// ================================= -->
-
-
-</section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
-
-
-<!-- ========================= FOOTER ========================= -->
-<footer class="section-footer border-top padding-y">
-	<div class="container">
-		<p class="float-md-right">
-			&copy Copyright 2019 All rights reserved
-		</p>
-		<p>
-			<a href="#">Terms and conditions</a>
-		</p>
-	</div><!-- //container -->
-</footer>
-<!-- ========================= FOOTER END // ========================= -->
-<script>
-	const register = async (fname, lname, email, gender, city, country, password) => {
-		try {
-			const res = await axios({
-				method: 'POST',
-				url: '/signup',
-				data: {
-					fname,
-					lname,
-					email,
-					city,
-					gender,
-					country,
-					password
-				}
-			})
-
-			window.location.assign(res.request.responseURL)
-		} catch (err) {
-
-		}
-
+		/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+		background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
 	}
 
-	document.getElementById('form').addEventListener('submit', e => {
-		e.preventDefault();
-		const fname = document.getElementById('fname').value
-		const lname = document.getElementById('lname').value
-		const email = document.getElementById('email').value
-		const gender = radioValue();
-		const city = document.getElementById('city').value
-		const country = checkCountry();
+	.gradient-custom-4 {
+		/* fallback for old browsers */
+		background: #84fab0;
 
-		const password = document.getElementById('password').value
+		/* Chrome 10-25, Safari 5.1-6 */
+		background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
 
-		function radioValue() {
-			var ele = document.getElementsByName('gender');
+		/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+		background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
+	}
+</style>
+<section class="vh-100 bg-image"
+	style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+	<div class="mask d-flex align-items-center h-100 gradient-custom-3">
+		<div class="container h-100">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-12 col-md-9 col-lg-7 col-xl-6">
+					<div class="card" style="border-radius: 15px;">
+						<div class="card-body p-5">
+							<h2 class="text-uppercase text-center mb-5">Create an account</h2>
+							<h2 class="text-uppercase text-center mb-5 user-exist"></h2>
 
-			for (i = 0; i < ele.length; i++) {
-				if (ele[i].checked)
-					return ele[i].value;
+							<form id="signupForm">
+								<label class="form-label" for="form3Example1cg ">Your Name</label>
+
+								<div class="form-outline mb-4">
+									<input type="text" id="name" class=" name form-control form-control-lg" />
+								</div>
+
+								<label class="form-label" for="form3Example3cg">Your Email</label>
+								<div class="form-outline mb-4">
+									<input type="email" id="email" class="form-control form-control-lg email " />
+								</div>
+								{{!--
+								<label class="form-label" for="form3Example3cg">Phone Number</label>
+								<div class="form-outline mb-4">
+									<input type="number" id="number" class="form-control form-control-lg  " />
+								</div> --}}
+
+								<div class="form-outline mb-4">
+									<label class="form-label" for="form3Example4cg">Password</label>
+									<input type="password" id="password"
+										class="form-control form-control-lg password" />
+								</div>
+
+								<div class="form-outline mb-4">
+									<label class="form-label" for="form3Example4cdg">Repeat your password</label>
+									<input type="password" id="confirm_password" class="form-control form-control-lg" />
+								</div>
+
+								<div class="d-flex justify-content-center">
+									<button type="button"
+										class="btn btn-success btn-block btn-lg gradient-custom-4 text-body register">Register</button>
+								</div>
+
+								<p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="/signin"
+										class="fw-bold text-body"><u>Login here</u></a></p>
+
+							</form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script>
+	$(document).ready(function () {
+
+		$('.register').on('click', async function () {
+			let Check = true
+			let name = $('#name').val();
+			let email = $('#email').val();
+			let password = $('#password').val();
+			let confirm_password = $('#confirm_password').val();
+			$(".error").remove();
+			if (name.length < 1) {
+				Check = false
+				$('#name').after('<span class="error" style="color:red;">This field is required</span>');
 			}
-		}
+			if (email.length < 1) {
+				Check = false
+				$('#email').after('<span class="error" style=color:red;>This field is required</span>');
+			} else {
+				var regEx = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
+				var validEmail = regEx.test(email);
+				console.log(email)
+				if (!validEmail) {
+					Check = false
+					$('#email').after('<span class="error" style="color:red;">Enter a valid email</span>');
+				}
+			}
+			if (password.length < 1) {
+				Check = false
+				$('#password').after('<span class="error" style="color:red;">This field is required</span>');
 
-		function checkCountry() {
-			const country = document.querySelector('#inputState')
-			return country.options[country.selectedIndex].value
-		}
-		if (fname && lname && email && gender && city && country && password) {
+			} else if (password.length < 8) {
+				Check = false
+				$('#password').after('<span class="error" style="color:red;">Password must be at least 8 characters long</span>')
+			}
+			if (confirm_password.length < 1) {
+				Check = false
+				$('#confirm_password').after('<span class="error" style="color:red;">This field is required</span>');
+			} else if
+				(confirm_password.length < 8) {
+				Check = false
+				$('#confirm_password').after('<span class="error" style="color:red;">Password must be at least 8 characters long</span>')
 
-			register(fname, lname, email, gender, city, country, password);
-		} else {
-			document.getElementById('invalid').innerText = "please fill the form"
-		}
+			}
+			if (Check) {
+				axios.post('', {
+					name, email, password
+				}).then(e => {
+					console.log(e.data)
+					if (e.data.status) {
+						$('.user-exist').text('User already exist').addClass('text-danger')
+					} else {
+						window.location.assign(e.data.url)
+					}
+				})
+			}
+		});
+
+
+
 	})
+
+
 </script>

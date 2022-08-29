@@ -79,7 +79,7 @@ router.route('/:id/orders/:orderid')
 
 ////////////// coupon //////////////////////////////////
 
-router.route('/coupon')
+router.route('/coupons')
   .post(UserController.checkCoupon)
 
 

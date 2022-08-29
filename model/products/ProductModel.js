@@ -36,9 +36,9 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  subCategory: {
+  category: {
     type: Schema.Types.ObjectId,
-    ref: "SubCategory",
+    ref: "Categorymdoel",
   },
 });
 

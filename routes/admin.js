@@ -18,9 +18,7 @@ const uploads = multer({
   storage,
 }).single("image");
 
-router.get("/home", verifytokenAndAuthorization, (req, res) => {
-  res.render("admin/adminHome", { layout: 'adminlayout' });
-});
+router.get("/home", verifytokenAndAuthorization, adminController.getHome);
 
 ///////////category management/////////////////
 
@@ -77,9 +75,15 @@ router.route('/orders/:id')
 ////////////////////////////////////////////////
 
 ///////////// coupon ////////////////////////////
-router.route('/coupon')
+router.route('/coupons')
+  .get(adminController.getAllCoupons)
   .post(adminController.createCoupon)
-  .patch(adminController.deleteCoupon)
+
+
+router.route('/coupons/:id')
+  .get(adminController.getACoupon)
+  .patch(adminController.editCoupon)
+  .delete(adminController.deleteCoupon)
 
 ////////////////////////////////////////////////
 

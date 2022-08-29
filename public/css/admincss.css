@@ -459,7 +459,7 @@
         width: 71px;
         height: 71px;
         overflow: hidden;
-        border-radius: ;
+        border-radius:2px;
     }
 
     .free {

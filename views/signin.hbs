@@ -1,170 +1,92 @@
-<header class="section-header">
-    <nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarTop4">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> Language </a>
-                        <ul class="dropdown-menu small">
-                            <li><a class="dropdown-item" href="#">English</a></li>
-                            <li><a class="dropdown-item" href="#">Arabic</a></li>
-                            <li><a class="dropdown-item" href="#">Russian </a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> USD </a>
-                        <ul class="dropdown-menu small">
-                            <li><a class="dropdown-item" href="#">EUR</a></li>
-                            <li><a class="dropdown-item" href="#">AED</a></li>
-                            <li><a class="dropdown-item" href="#">RUBL </a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li><a href="#" class="nav-link"> <i class="fa fa-envelope"></i> Email </a></li>
-                    <li><a href="#" class="nav-link"> <i class="fa fa-phone"></i> Call us </a></li>
-                </ul> <!-- list-inline //  -->
-            </div> <!-- navbar-collapse .// -->
-        </div> <!-- container //  -->
-    </nav>
+<section class="vh-100" style="background-color: #9A616D;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-xl-10">
+                <div class="card" style="border-radius: 1rem;">
+                    <div class="row g-0">
+                        <div class="col-md-6 col-lg-5 d-none d-md-block">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                                alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                        </div>
+                        <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                            <div class="card-body p-4 p-lg-5 text-black">
 
-    <section class="header-main border-bottom">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-2 col-md-3 col-6">
-                    <a href="/" class="brand-wrap">
-                        <img class="logo" src="/images/logo.png">
-                    </a> <!-- brand-wrap.// -->
+                                <form action="login" method="post">
+
+                                    <div class="d-flex align-items-center mb-3 pb-1">
+                                        <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                                        <span class="h1 fw-bold mb-0">Logo</span>
+                                    </div>
+
+                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account
+                                    </h5>
+                                    <h5 class="fw-normal mb-3 pb-3 invalid" style="letter-spacing: 1px;"></h5>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="email" id="email" id="form2Example17 "
+                                            class="form-control form-control-lg email " />
+                                        <label class="form-label" for="form2Example17">Email address</label>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="password" id="password" id="form2Example27"
+                                            class="form-control form-control-lg password" />
+                                        <label class="form-label" for="form2Example27">Password</label>
+                                    </div>
+
+                                    <div class="pt-1 mb-4">
+                                        <button class="btn btn-dark btn-lg btn-block login" type="button">Login</button>
+                                    </div>
+
+                                    {{!-- <a class="small text-muted" href="#!">Forgot password?</a> --}}
+                                    <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a
+                                            href="/signup" style="color: #393f81;">Register here</a></p>
+                                    {{!-- <a href="#!" class="small text-muted">Terms of use.</a>
+                                    <a href="#!" class="small text-muted">Privacy policy</a> --}}
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <a href="./store.html" class="btn btn-outline-primary">Store</a>
-                <div class="col-lg  col-md-6 col-sm-12 col">
-                    <form action="#" class="search">
-                        <div class="input-group w-100">
-                            <input type="text" class="form-control" style="width:60%;" placeholder="Search">
-
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form> <!-- search-wrap .end// -->
-                </div> <!-- col.// -->
-                <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
-                    <div class="d-flex justify-content-end mb-3 mb-lg-0">
-                        <div class="widget-header">
-                            <small class="title text-muted">Welcome guest!</small>
-                            <div>
-                                <a href="/signin">Sign in</a> <span class="dark-transp"> | </span>
-                                <a href="/signup"> Register</a>
-                            </div>
-                        </div>
-                    </div> <!-- widgets-wrap.// -->
-                </div> <!-- col.// -->
-            </div> <!-- row.// -->
-        </div> <!-- container.// -->
-    </section> <!-- header-main .// -->
-
-
-
-</header> <!-- section-header.// -->
-
-
-
-<!-- ========================= SECTION CONTENT ========================= -->
-<section class="section-conten padding-y" style="min-height:84vh">
-
-    <!-- ============================ COMPONENT LOGIN   ================================= -->
-    <div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
-        <div class="card-body">
-            <h4 class="card-title mb-4">Sign in</h4>
-            <p id="check"></p>
-            <form id="form">
-                <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Email Address" id="email">
-                </div> <!-- form-group// -->
-                <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" id="password">
-                </div> <!-- form-group// -->
-
-                <div class="form-group">
-                    <a href="#" class="float-right">Forgot password?</a>
-
-                </div> <!-- form-group form-check .// -->
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block"> Login </button>
-                </div> <!-- form-group// -->
-            </form>
-        </div> <!-- card-body.// -->
-    </div> <!-- card .// -->
-
-    <p class="text-center mt-4">Don't have account? <a href="/signup">Sign up</a></p>
-    <br><br>
-    <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
-
-
+            </div>
+        </div>
+    </div>
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
-
-
-<!-- ========================= FOOTER ========================= -->
-<footer class="section-footer border-top padding-y">
-    <div class="container">
-        <p class="float-md-right">
-            &copy Copyright 2019 All rights reserved
-        </p>
-        <p>
-            <a href="#">Terms and conditions</a>
-        </p>
-    </div><!-- //container -->
-</footer>
+<script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
 <script>
-    const login = async (email, password) => {
-        try {
+    $(document).ready(function () {
 
-            const res = await axios({
-                method: "POST",
-                url: "/signin",
-                data: {
-                    email,
-                    password
-                }
-            })
+        $('.login').on('click', async function () {
+            let Check = true
+            const email = $('.email').val()
+            const password = $('.password').val()
+            $(".error").remove();
+            if (email.length < 1) {
+                Check = false
+                $('#email').after('<span class="error" style="color:red;">This field is required</span> ')
 
-            if (res.data.status == "failed") {
-                document.getElementById('check').innerText = res.data.data.message
-            } else if (res.data.status == "blocked") {
-                alert(res.data.message)
             } else {
-                window.location.assign(res.request.responseURL)
+                var regEx = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
+                var validEmail = regEx.test(email);
 
             }
-        }
-        catch (err) {
-
-
-        }
-
-
-    }
-    document.querySelector('#form').addEventListener('submit', e => {
-
-        e.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        if (email && password) {
-
-            login(email, password)
-        } else {
-            document.getElementById('check').innerText = "please enter your email and password"
-        }
-
+            if (password.length < 1) {
+                Check = false
+                $('#password').after('<span class="error" style="color:red;"> This field is required</span>')
+            }
+            if (Check) {
+                await axios.post('', {
+                    email, password
+                }).then(e => {
+                    if (e.data.status) {
+                        $('.invalid').text(e.data.message).addClass('text-danger')
+                    } else {
+                        window.location.assign(e.data.url)
+                    }
+                })
+            }
+        })
     })
 
 </script>
-
-<!-- ========================= FOOTER END // ========================= -->

@@ -7,6 +7,26 @@ const Usersmodel = require("../model/users/UserModel");
 const OrderModel = require('../model/users/OrderModel');
 const CouponModel = require('../model/products/couponModel');
 
+
+
+
+
+// ============== HOME ============== ///
+
+exports.getHome = async (req, res) => {
+  const totalUser = (await User.find({})).length
+  const totalOrders = (await OrderModel.find({})).length
+  const totalProducts = (await Product.find({})).length
+  const orders = await Product.find({})
+  const totalPayements = orders.reduce((acc, crr) => { return acc++ }, 0)
+  console.log(totalPayements)
+
+  res.render("admin/adminHome", { layout: 'adminlayout', totalOrders, totalProducts, totalUser });
+}
+
+
+
+
 // //////////  category management ///////////////
 
 exports.getcategory = async (req, res) => {
@@ -91,11 +111,11 @@ exports.getAddProduct = async (req, res) => {
 
 
 exports.addProduct = async (req, res) => {
-  const { brandName, productName, price, discountPrice, stock, size, description, subCategory } = req.body
+  const { brandName, productName, price, discountPrice, stock, size, description, category } = req.body
 
   const image = req.file.filename;
 
-  const newProduct = await new Product({ brandName, productName, price, discountPrice, stock, size, description, subCategory, image, });
+  const newProduct = await new Product({ brandName, productName, price, discountPrice, stock, size, description, category, image, });
 
   newProduct.save();
 
@@ -217,21 +237,47 @@ exports.UpdateStatus = async (req, res) => {
 
 //////////////// coupon management ////////////
 
+exports.getAllCoupons = async (req, res) => {
+  try {
+    const coupons = await CouponModel.find().lean()
+    res.render('admin/coupon', { layout: 'adminlayout', coupons })
+  } catch (err) {
+
+  }
+}
+
 exports.createCoupon = async (req, res) => {
   try {
     const newCoupon = await new CouponModel(req.body)
 
     newCoupon.save()
-    res.redirect('/admin/products');
+    res.redirect('/admin/coupons');
   } catch (err) {
 
+  }
+}
+exports.getACoupon = async (req, res) => {
+  try {
+    const coupon = await CouponModel.findById(req.params.id).lean()
+    res.json({ coupon })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+exports.editCoupon = async (req, res) => {
+  try {
+    await CouponModel.findByIdAndUpdate(req.params.id, { $set: req.body })
+    res.json({ message: "data edited successfully" })
+  } catch (err) {
+    console.log(err)
   }
 }
 
 exports.deleteCoupon = async (req, res) => {
   try {
 
-    await CouponModel.findByIdAndDelete(req.body.couponid).then(
+    await CouponModel.findByIdAndDelete(req.params.id).then(
       res.json({ message: 'Coupon deleted successfully' })
     )
   } catch (error) {
@@ -244,8 +290,15 @@ exports.deleteCoupon = async (req, res) => {
 
 exports.getdata = async (req, res) => {
   const orders = await OrderModel.find()
-  const totalOrders = orders.length
-
-
-  res.json({ orders })
+  const paid = orders.filter(e => e.paid)
+  const onlinePayments = (orders.filter(e => e.paymentType == 'Online payment')).length
+  const confirmedOrders = (orders.filter(e => e.status == 'confirmed')).length
+  const outOfDelivery = (orders.filter(e => e.status == 'out of delivery')).length
+  const delivered = (orders.filter(e => e.status == 'delivered')).length
+  const canceledOrders = (orders.filter(e => e.status == 'cancel')).length
+  const cod = orders.length - onlinePayments
+  const paidOrders = paid.length;
+  const unpaidOrders = orders.length - paidOrders
+  console.log(onlinePayments)
+  res.json({ orders, paidOrders, unpaidOrders, onlinePayments, cod, confirmedOrders, outOfDelivery, delivered, canceledOrders })
 }

@@ -196,7 +196,7 @@
     /*==================================================================
     [ Cart ]*/
     $('.js-show-cart').on('click', function () {
-        const userid = $('.js-show-modal1').attr('userid')
+        const userid = $('.js-panel-cart').attr('userid')
 
         axios.get(`/users/${userid}/carts`).then(async e => {
             let total = 0;

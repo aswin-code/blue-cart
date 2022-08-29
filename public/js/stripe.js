@@ -9,6 +9,6 @@ const pay = async orderId => {
         });
 
     } catch (err) {
-
+        console.log(err)
     }
 }
