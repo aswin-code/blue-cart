@@ -8,10 +8,10 @@ exports.getCheckoutSession = async (req, res, next) => {
     try {
 
         // 1)Get current order
-
+        console.log(req)
         const { userid, orderid, totalBill } = req.query
 
-        const url = `http://localhost:4000/users/${userid}`
+        const url = `http://52.70.218.167/users/${userid}`
 
         // 2) create  checkout session
         const session = await stripe.checkout.sessions.create({
