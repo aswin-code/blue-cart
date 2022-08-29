@@ -657,7 +657,7 @@
                 const pay = async orderId => {
                     try {
 
-                        await axios.get(`http://localhost:4000${orderId}`).then(e => {
+                        await axios.get(`${orderId}`).then(e => {
                             console.log(e)
                             stripe.redirectToCheckout({
                                 sessionId: e.data.session.id
