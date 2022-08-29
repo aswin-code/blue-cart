@@ -8,10 +8,10 @@ exports.getCheckoutSession = async (req, res, next) => {
     try {
 
         // 1)Get current order
-        const order = await OrderModel.findById(req.params.id)
-        console.log(order)
 
-        const url = `http://localhost:4000/users/${order.userid}`
+        const { userid, orderid, totalBill } = req.query
+
+        const url = `http://localhost:4000/users/${userid}`
 
         // 2) create  checkout session
         const session = await stripe.checkout.sessions.create({
@@ -26,12 +26,12 @@ exports.getCheckoutSession = async (req, res, next) => {
                         name: 'T-shirt',
                     },
 
-                    unit_amount: (50 + order.totalBill * 1) * 100,
+                    unit_amount: (50 + totalBill * 1) * 100,
                 },
                 quantity: 1,
             }],
             mode: 'payment',
-            success_url: `${url}?orderid=${order._id}&paid=true&userid=${order.userid}`,
+            success_url: `${url}?orderid=${orderid}&paid=true&userid=${userid}`,
             cancel_url: url,
         });
 
