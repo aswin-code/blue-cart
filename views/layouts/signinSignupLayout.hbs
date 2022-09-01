@@ -33,6 +33,10 @@
             } else {
                 var regEx = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
                 var validEmail = regEx.test(email);
+                if (!validEmail) {
+                    Check = false
+                    $('#email').after('<span class="error" style="color:red;">Invaild Email</span> ')
+                }
 
             }
             if (password.length < 1) {
@@ -45,6 +49,7 @@
                 }).then(e => {
                     console.log(e.data)
                     if (e.data.status) {
+
                         $('.invalid').text(e.data.message).addClass('text-danger')
                     } else {
                         window.location.assign(e.data.url)

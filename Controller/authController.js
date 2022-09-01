@@ -61,6 +61,7 @@ exports.getSignin = (req, res) => {
 
 
 exports.postSignin = async (req, res) => {
+
     try {
         const {
             email,
@@ -70,57 +71,55 @@ exports.postSignin = async (req, res) => {
         const user = await User.findOne({
             email
         });
-        if (!user.isActive) {
-            res.json({
-                status: "blocked",
-                message: "sorry your account has been disabled"
+
+
+        if (user) {
+            if (!user.isActive) return res.json({ status: "blocked", message: "sorry your account has been disabled" })
+
+
+            bcrypt.compare(password, user.password).then(data => {
+
+                if (data) {
+                    const token = jwt.sign({
+                        id: user._id,
+                        isAdmin: user.isAdmin
+                    }, process.env.JWT_SECRTKEY);
+                    if (user.isAdmin) {
+                        res.cookie('jwt', token, {
+                            expires: new Date(Date.now() + 10 * 100000),
+                            httpOnly: true
+                        }).json({ url: `/admin/home` });
+                    } else {
+                        res.cookie('jwt', token, {
+                            expires: new Date(Date.now() + 10 * 100000),
+                            httpOnly: true
+                        }).json({ url: `/users/${user._id}` });
+                    }
+                } else {
+                    res.json({
+                        status: "failed",
+
+                        message: "invaild email or password"
+
+                    });
+
+                }
             })
         } else {
 
-            if (user) {
-                bcrypt.compare(password, user.password).then(data => {
+            res.json({
+                status: "failed",
 
-                    if (data) {
-                        const token = jwt.sign({
-                            id: user._id,
-                            isAdmin: user.isAdmin
-                        }, process.env.JWT_SECRTKEY);
-                        if (user.isAdmin) {
-                            res.cookie('jwt', token, {
-                                expires: new Date(Date.now() + 10 * 100000),
-                                httpOnly: true
-                            }).json({ url: `/admin/home` });
-                        } else {
-                            res.cookie('jwt', token, {
-                                expires: new Date(Date.now() + 10 * 100000),
-                                httpOnly: true
-                            }).json({ url: `/users/${user._id}` });
-                        }
-                    } else {
-                        res.json({
-                            status: "failed",
-                            data: {
-                                message: "invaild email or password"
-                            }
-                        });
-
-                    }
-                })
-            } else {
-                res.json({
-                    status: "failed",
-                    data: {
-                        message: "invaild email or password"
-                    }
-                });
-
-            }
+                message: "invaild email or password"
+            });
 
         }
 
 
-    } catch (err) {
 
+
+    } catch (err) {
+        console.log(err)
 
     }
 
