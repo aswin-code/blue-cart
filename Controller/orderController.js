@@ -11,7 +11,7 @@ exports.getCheckoutSession = async (req, res, next) => {
         console.log(req)
         const { userid, orderid, totalBill } = req.query
 
-        const url = `http://52.70.218.167/users/${userid}`
+        const url = `https://www.cozastore.online/users/${userid}`
 
         // 2) create  checkout session
         const session = await stripe.checkout.sessions.create({
