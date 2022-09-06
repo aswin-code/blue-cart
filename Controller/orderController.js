@@ -26,7 +26,7 @@ exports.getCheckoutSession = async (req, res, next) => {
                         name: 'T-shirt',
                     },
 
-                    unit_amount: (50 + totalBill * 1) * 100,
+                    unit_amount: (totalBill * 1) * 100,
                 },
                 quantity: 1,
             }],
