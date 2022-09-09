@@ -71,6 +71,9 @@
         </div>
     </div>
     <h4>Over view</h4>
+    <button type="button" class="btn btn-primary" onclick="tableToCSV()">
+        download CSV
+    </button>
     <div class="row">
         <div class="col-12 col-md-6 py-4">
             <canvas id="sales-chart" style="max-width:30vw; max-height:40vh;">
@@ -87,99 +90,177 @@
 
             </canvas>
         </div>
+        <div class="col-12 col-md-6 py-4" style="display:none;">
+            <table>
+                <thead>
+                    <th>Total Orders</th>
+                    <th>onlinePayments</th>
+                    <th>COD</th>
+                    <th>Total Sales</th>
+                </thead>
+                <tbody>
+                    <td>{{totalOrders}}</td>
+                    <td>{{onlinePayments}}</td>
+                    <td>{{cod}}</td>
+                    <td>{{totalSales}}</td>
+                </tbody>
+            </table>
+
+
+        </div>
     </div>
-</div>
-<script>
-    $(document).ready(function () {
-        axios.get('/admin/data').then(e => {
+    <script type="text/javascript">
+        function tableToCSV() {
+
+            // Variable to store the final csv data
+            var csv_data = [];
+
+            // Get each row data
+            var rows = document.getElementsByTagName('tr');
+            for (var i = 0; i < rows.length; i++) {
+
+                // Get each column data
+                var cols = rows[i].querySelectorAll('td,th');
+
+                // Stores each csv row data
+                var csvrow = [];
+                for (var j = 0; j < cols.length; j++) {
+
+                    // Get the text data of each cell
+                    // of a row and push it to csvrow
+                    csvrow.push(cols[j].innerHTML);
+                }
+
+                // Combine each column value with comma
+                csv_data.push(csvrow.join(","));
+            }
+
+            // Combine each row data with new line character
+            csv_data = csv_data.join('\n');
+
+            // Call this function to download csv file 
+            downloadCSVFile(csv_data);
+
+        }
+
+        function downloadCSVFile(csv_data) {
+
+            // Create CSV file object and feed
+            // our csv_data into it
+            CSVFile = new Blob([csv_data], {
+                type: "text/csv"
+            });
+
+            // Create to temporary link to initiate
+            // download process
+            var temp_link = document.createElement('a');
+
+            // Download csv file
+            temp_link.download = "salesreport.csv";
+            var url = window.URL.createObjectURL(CSVFile);
+            temp_link.href = url;
+
+            // This link should not be displayed
+            temp_link.style.display = "none";
+            document.body.appendChild(temp_link);
+
+            // Automatically click the link to
+            // trigger download
+            temp_link.click();
+            document.body.removeChild(temp_link);
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            axios.get('/admin/data').then(e => {
 
 
-            const ctx = document.getElementById('sales-chart').getContext('2d');
-            const myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['paid', 'UnPaid',],
-                    datasets: [{
-                        label: '# of Votes',
-                        data: [e.data.paidOrders, e.data.unpaidOrders],
-                        backgroundColor: [
-                            'rgba(0, 255, 0, 0.3)',
-                            'rgba(54, 162, 235, 0.2)',
+                const ctx = document.getElementById('sales-chart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['paid', 'UnPaid',],
+                        datasets: [{
+                            label: '# of Votes',
+                            data: [e.data.paidOrders, e.data.unpaidOrders],
+                            backgroundColor: [
+                                'rgba(0, 255, 0, 0.3)',
+                                'rgba(54, 162, 235, 0.2)',
 
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
-            const ctx2 = document.getElementById('orders-chart').getContext('2d');
-            const myChart2 = new Chart(ctx2, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Online Payement', 'COD',],
-                    datasets: [{
-                        label: '# of Votes',
-                        data: [e.data.onlinePayments, e.data.cod],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
+                });
+                const ctx2 = document.getElementById('orders-chart').getContext('2d');
+                const myChart2 = new Chart(ctx2, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Online Payement', 'COD',],
+                        datasets: [{
+                            label: '# of Votes',
+                            data: [e.data.onlinePayments, e.data.cod],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
 
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
-            const ctx3 = document.getElementById('payment-chart').getContext('2d');
-            const myChart3 = new Chart(ctx3, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Confrim Orders', 'Out of Delivery', 'Delivered', 'Canceled Orders'],
-                    datasets: [{
-                        label: '# of Votes',
-                        data: [e.data.confirmedOrders, e.data.outOfDelivery, e.data.delivered, e.data.canceledOrders],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(255,255,0,0.3)',
-                            'rgba(0, 255, 0, 0.3)',
-                            'rgba(255, 0, 0, 0.5)',
+                });
+                const ctx3 = document.getElementById('payment-chart').getContext('2d');
+                const myChart3 = new Chart(ctx3, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Confrim Orders', 'Out of Delivery', 'Delivered', 'Canceled Orders'],
+                        datasets: [{
+                            label: '# of Votes',
+                            data: [e.data.confirmedOrders, e.data.outOfDelivery, e.data.delivered, e.data.canceledOrders],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255,255,0,0.3)',
+                                'rgba(0, 255, 0, 0.3)',
+                                'rgba(255, 0, 0, 0.5)',
 
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
+                });
+            })
         })
-    })
-</script>
+    </script>

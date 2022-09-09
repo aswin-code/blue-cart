@@ -17,11 +17,13 @@ exports.getHome = async (req, res) => {
   const totalUser = (await User.find({})).length
   const totalOrders = (await OrderModel.find({})).length
   const totalProducts = (await Product.find({})).length
-  const orders = await Product.find({})
-  const totalPayements = orders.reduce((acc, crr) => { return acc++ }, 0)
-  console.log(totalPayements)
+  const orders = await OrderModel.find({})
+  const totalSales = orders.reduce((acc, crr) => { return acc + crr.totalBill }, 0)
+  const cod = ((await OrderModel.find()).filter(e => e.paymentType == "cash On Delivery")).length
+  const onlinePayments = cod - totalOrders
 
-  res.render("admin/adminHome", { layout: 'adminlayout', totalOrders, totalProducts, totalUser });
+
+  res.render("admin/adminHome", { layout: 'adminlayout', totalOrders, totalProducts, totalUser, cod, onlinePayments, totalSales });
 }
 
 
@@ -214,8 +216,10 @@ exports.getAllorders = async (req, res) => {
 exports.getAOrder = async (req, res) => {
   try {
     const order = await OrderModel.findById(req.params.id).populate({ path: 'order', populate: { path: 'product' } })
-
-    res.render('admin/orderDetail', { layout: "adminlayout", order })
+    const total = order.order.reduce((acc, curr) => {
+      return acc + curr.total
+    }, 0)
+    res.render('admin/orderDetail', { layout: "adminlayout", order, total })
   } catch (error) {
 
   }

@@ -425,7 +425,7 @@
 
                                                         <div class="rs1-select2 bor8 bg0">
                                                             <select class="js-select2" id="city">
-                                                                <option>State</option>
+                                                                <option>city</option>
                                                                 <option>Calicut</option>
                                                                 <option>Kannur</option>
                                                                 <option>Kochi</option>
@@ -684,7 +684,8 @@
                         console.log(e.data)
                         pay(e.data.url)
                     })
-                } else if ($('.payment-method').val() == 'Cash On Delivery')
+                } else if ($('.payment-method').val() == 'Cash On Delivery') {
+                    console.log('wokrde')
                     axios.patch(' ', {
                         addressid,
                         code
@@ -692,6 +693,8 @@
                     }).then(e => {
                         window.location.assign(e.data.url)
                     })
+                }
+
             })
         })
 
@@ -704,7 +707,7 @@
             const pin = $('#pin').val()
             const userid = $('#userid').val()
             await axios.post(`/users/${userid}/address`, { address, state, city, pin }).then(e => {
-
+                window.location.reload()
             })
         })
 

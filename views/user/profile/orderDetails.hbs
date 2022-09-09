@@ -1,23 +1,26 @@
 <div class="main--content d-flex justify-conten-center align-items-center ">
     <div class="row w-100 ">
-        <div class="col-8 d-flex justify-content-between g-2">
-            {{#each order.order}}
-            <div class="card mb-3" style="max-width: 500px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="/images/items/{{this.product.image}}" class="img-fluid rounded-start h-100" alt="">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h4 class="card-title text-muted">{{this.product.brandName}}</h4>
-                            <h5 class="card-title  pb-4 ">{{this.product.productName}}</h5>
-                            <p class="card-text">Quantity : {{this.qty}}</p>
-                            <p class="card-text">Total : {{this.total}}</p>
+        <div class="col-8 d-flex justify-content-between ">
+            <div class="row w-100">
+                {{#each order.order}}
+                <div class="card mb-3  col-6">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="/images/items/{{this.product.image}}" class="img-fluid rounded-start h-100"
+                                alt="">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h4 class="card-title text-muted">{{this.product.brandName}}</h4>
+                                <h5 class="card-title  pb-4 ">{{this.product.productName}}</h5>
+                                <p class="card-text">Quantity : {{this.qty}}</p>
+                                <p class="card-text">Total : {{this.total}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+                {{/each}}
             </div>
-            {{/each}}
         </div>
         <div class="col-4 ">
             <div class="card ">

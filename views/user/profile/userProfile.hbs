@@ -3,18 +3,18 @@
         <div class="title">
             <h2 class="section--title">Profile</h2>
         </div>
-        <div class="cards">
+        <div class="card " style="min-width:50%;">
             <div class="card card-1">
                 <div class="card--data">
                     <div class="card--content">
                         <h5 class="card--title">{{user.email}}</h5>
-                        <h1>{{user.fname}}</h1>
+                        <h1>{{user.name}}</h1>
                         <br>
                         <h4>Personal Info</h4>
-                        <p>{{user.fname}}</p>
+                        <p>Name :{{user.name}}</p>
                         <p>{{user.gender}}</p>
-                        <p></p>
-                        <p></p>
+                        <p>Total Orders :{{orders.length}}</p>
+                        <p>Orders Received :{{orderReceived}}</p>
                         <p></p>
                     </div>
                     <i class="ri-user-2-line card--icon--lg"></i>

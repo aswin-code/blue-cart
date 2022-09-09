@@ -102,6 +102,16 @@
         <li>
           <a href="#">Contact</a>
         </li>
+        <li>
+          <a href="/users/{{user._id}}/profile">
+            Profile
+          </a>
+        </li>
+        <li>
+          <a href="/logout">
+            logout
+          </a>
+        </li>
       </ul>
     </div>
 
@@ -271,7 +281,7 @@
               View Cart
             </a>
 
-            <a href="shoping-cart.html"
+            <a href="/users/{{user._id}}/check-out"
               class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
               Check Out
             </a>

@@ -254,13 +254,10 @@ exports.postCheckOut = async (req, res) => {
     }, [])
     const total = await cart.reduce((acc, curr) => {
       return acc + curr.total
-    }, 0)
-
+    }, 50)
     if (coupon) {
-      total += 50
       totalBill = (coupon.couponDiscount * -1) + total
     } else {
-      total += 50
       totalBill = total;
     }
 
@@ -272,7 +269,7 @@ exports.postCheckOut = async (req, res) => {
     })
 
 
-    const newOrder = await Order.create({ userid: req.params.id, order: cart, shippingAddress: { address, state, city, pin }, totalBill: totalBill + 50 * 1, discount: total - totalBill })
+    const newOrder = await Order.create({ userid: req.params.id, order: cart, shippingAddress: { address, state, city, pin }, totalBill, discount: total - totalBill })
 
 
     res.json({ url: `/order/checkout-session/?orderid=${newOrder._id}&totalBill=${newOrder.totalBill}&userid=${newOrder.userid}` })
@@ -301,7 +298,7 @@ exports.cashOnDelivery = async (req, res) => {
     }, [])
     const total = carts.reduce((acc, curr) => {
       return acc + curr.total
-    }, 0)
+    }, 50)
     if (coupon) {
       totalBill = (coupon.couponDiscount * -1) + total
     } else {
